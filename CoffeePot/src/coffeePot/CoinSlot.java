@@ -1,4 +1,4 @@
-package coffee_pot;
+package coffeePot;
 
 public class CoinSlot {
 	

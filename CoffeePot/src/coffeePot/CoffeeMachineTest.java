@@ -1,4 +1,4 @@
-package coffee_pot;
+package coffeePot;
 
 import org.junit.After;
 import org.junit.AfterClass;
