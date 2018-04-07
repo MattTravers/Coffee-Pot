@@ -30,7 +30,12 @@ public class CoffeeMachineTest {
 	// Sally puts in two quarters, presses dispense Dispenses coffee.
 	@Test
 	public void testB() {
-		// Assert.assertEquals();
+		Coffee coffee = new Coffee(false, false, false);
+		coffeePot.addCoin(25);
+		coffeePot.addCoin(25);
+		Assert.assertEquals(50, coffeePot.getBalance());
+		Assert.assertEquals(coffee, coffeePot.serveCoffee(coffee));
+		Assert.assertEquals(15, coffeePot.getBalance());
 	}
 
 	// Sally puts in one quarters, presses coin return Returns 25 cents.
@@ -46,7 +51,7 @@ public class CoffeeMachineTest {
 	}
 
 	// Sally buys two coffees, white with sugar The sugar dispenser runs out of
-	// sugar after the first Dispenses one coffee, displays “out of sugar.”
+	// sugar after the first Dispenses one coffee, displays ï¿½out of sugar.ï¿½
 	@Test
 	public void testE() {
 		// Assert.assertEquals();

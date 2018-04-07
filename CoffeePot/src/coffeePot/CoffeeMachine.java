@@ -24,6 +24,7 @@ public class CoffeeMachine {
 		return coinSlot.coinReturn();
 	}
 	
+	
 	public boolean isEnough(Drink drink) {
 		return coinSlot.isEnough(drink.getPrice());
 	}
@@ -32,11 +33,12 @@ public class CoffeeMachine {
 	 * takes a Drink object and checks balance and reserve, if okay, deducts from
 	 * balance and reserve and prints drink.
 	 */
-	public void serveCoffee(Drink drink) {
-		if (condimentReserve.check(drink) && coinSlot.isEnough(drink.getPrice())) {
-			condimentReserve.changeReserve(drink);
-			coinSlot.deduct(drink.getPrice());
-			System.out.println(drink);
+	public Coffee serveCoffee(Coffee coffee) {
+		if (condimentReserve.check(coffee) && coinSlot.isEnough(coffee.getPrice())) {
+			condimentReserve.changeReserve(coffee);
+			coinSlot.deduct(coffee.getPrice());
+			return coffee;
 		}
+		return null;
 	}
 }

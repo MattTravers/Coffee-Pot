@@ -14,12 +14,12 @@ public class CoinSlot {
 	
 	
 	public void insert(int amount) {
-		this.balance =+ amount;
+		this.balance += amount;
 	}
 
 	
 	public void deduct(int price) {
-		// TODO Auto-generated method stub
+		this.balance -= price;
 	}
 	
 	public int coinReturn() {
