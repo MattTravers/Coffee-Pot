@@ -5,15 +5,7 @@ public class CoinSlot {
 	
 	// in cents
 	private static int balance = 0;
-	
-	/*
-	 * 
-	 * 
-	 * list of coins for later implementation
-	 * 
-	 * 
-	 */
-	
+
 
 	public boolean isEnough(int price) {
 		// TODO Auto-generated method stub
