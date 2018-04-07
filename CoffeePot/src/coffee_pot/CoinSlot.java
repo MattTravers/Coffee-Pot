@@ -13,7 +13,7 @@ public class CoinSlot {
 	}
 	
 	
-	public insert(int amount) {
+	public void insert(int amount) {
 	this.balance =+ amount;
 	}
 
@@ -32,7 +32,7 @@ public class CoinSlot {
 		return this.balance;
 	}
 	
-	public int setBalance(int amount) {
+	public void setBalance(int amount) {
 		this.balance = amount;
 	}
 }
