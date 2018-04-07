@@ -11,6 +11,19 @@ public class CoffeeMachine {
 		coinSlot = new CoinSlot();
 	}
 
+	//add coin method
+	public void addCoin(int value) {
+		coinSlot.insert(value);
+	}
+	//get balance
+	public int getBalance() {
+		return coinSlot.getBalance();
+	}
+	//coin return
+	public int coinReturn() {
+		return coinSlot.coinReturn();
+	}
+	
 	/*
 	 * takes a Drink object and checks balance and reserve, if okay, deducts from
 	 * balance and reserve and prints drink.
