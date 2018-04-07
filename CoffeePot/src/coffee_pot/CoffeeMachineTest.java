@@ -1,5 +1,6 @@
 package coffee_pot;
 
+import org.junit.Assert;
 
 class CoffeeMachineTest {
 
@@ -20,41 +21,41 @@ class CoffeeMachineTest {
 	   @Test
 	   public void testA()
 	   {
-
+		   Assert.assertEquals();
 	   }
 
 
 	   @Test
 	   public void testB()
 	   {
-
+		   Assert.assertEquals();
 	   }
 
 	   
 	   @Test
 	   public void testC()
 	   {
-
+		   Assert.assertEquals();
 	   }
 
 	   @Test
 	   public void testD()
 	   {
-
+		   Assert.assertEquals();
 	   }
 	   
 
 	   @Test
 	   public void testE()
 	   {
-
+		   Assert.assertEquals();
 	   }
 	  
 
 	   @Test
 	   public void testF()
 	   {
-
+		   Assert.assertEquals();
 	   }
 	   
 
