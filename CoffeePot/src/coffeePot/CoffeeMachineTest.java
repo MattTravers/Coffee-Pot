@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-class CoffeeMachineTest {
+public class CoffeeMachineTest {
 	private CoffeeMachine coffeePot;
 
 	@BeforeClass
