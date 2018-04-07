@@ -4,7 +4,7 @@ public class CoinSlot {
 	
 	
 	// in cents
-	private static int balance = 0;
+	private int balance = 0;
 
 
 	public boolean isEnough(int price) {
@@ -14,7 +14,7 @@ public class CoinSlot {
 	
 	
 	public void insert(int amount) {
-	this.balance =+ amount;
+		this.balance =+ amount;
 	}
 
 	
