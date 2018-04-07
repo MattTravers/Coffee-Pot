@@ -14,6 +14,8 @@ public class Coffee implements Drink {
 		this.decaf = decaf;
 	}
 	
+	// THIS COMMENT WAS NOT HERE BEFORE
+	
 	@Override
 	public int getPrice() {
 		return this.price;
@@ -31,4 +33,6 @@ public class Coffee implements Drink {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	//TEST CHANGE FOR GITHUB 
 }
