@@ -34,7 +34,7 @@ public class CoffeeMachineTest {
 		coffeePot.addCoin(25);
 		coffeePot.addCoin(25);
 		Assert.assertEquals(50, coffeePot.getBalance());
-		Assert.assertEquals(coffee, coffeePot.serveCoffee(coffee));
+		Assert.assertEquals("Coffee Machine dispenses " + coffee, coffeePot.serveCoffee(coffee));
 		Assert.assertEquals(15, coffeePot.getBalance());
 	}
 

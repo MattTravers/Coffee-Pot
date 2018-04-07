@@ -13,14 +13,17 @@ public class CoffeeMachine {
 
 	//add coin method
 	public void addCoin(int value) {
+		System.out.println("Added " + value + "to the machine!");
 		coinSlot.insert(value);
 	}
 	//get balance
 	public int getBalance() {
+		System.out.println("Current balance is " + coinSlot.getBalance());
 		return coinSlot.getBalance();
 	}
 	//coin return
 	public int coinReturn() {
+		System.out.println("Returned " + coinSlot.getBalance());
 		return coinSlot.coinReturn();
 	}
 	
@@ -33,12 +36,21 @@ public class CoffeeMachine {
 	 * takes a Drink object and checks balance and reserve, if okay, deducts from
 	 * balance and reserve and prints drink.
 	 */
-	public Coffee serveCoffee(Coffee coffee) {
-		if (condimentReserve.check(coffee) && coinSlot.isEnough(coffee.getPrice())) {
-			condimentReserve.changeReserve(coffee);
-			coinSlot.deduct(coffee.getPrice());
-			return coffee;
+	public String serveCoffee(Drink drink) {
+		
+		if (!condimentReserve.check(drink)) {
+			System.out.println("Coffee Machine is out of ingredients for " + drink);
+			return "Coffee Machine is out of ingredients for " + drink;
+		} else if(!coinSlot.isEnough(drink.getPrice())) {
+			System.out.println("Please insert more money");
+			return "Please insert more money";
 		}
-		return null;
+		else {
+			condimentReserve.changeReserve(drink);
+			coinSlot.deduct(drink.getPrice());
+			System.out.println("Coffee Machine dispenses " + drink);
+			return "Coffee Machine dispenses " + drink;
+		}
+
 	}
 }
