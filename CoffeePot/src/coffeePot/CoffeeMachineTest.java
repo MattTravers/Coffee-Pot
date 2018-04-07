@@ -23,7 +23,8 @@ public class CoffeeMachineTest {
 	// Sally puts in one quarter, presses dispense Insufficient funds.
 	@Test
 	public void testA() {
-		// Assert.assertEquals();
+		coffeePot.addCoin(25);
+		Assert.assertFalse(coffeePot.isEnough(new Coffee(true,true,true)));		
 	}
 
 	// Sally puts in two quarters, presses dispense Dispenses coffee.

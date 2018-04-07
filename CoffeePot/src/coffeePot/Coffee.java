@@ -24,7 +24,7 @@ public class Coffee implements Drink {
 	
 	
 	public String toString() {
-		return "Coffee" + (decaf? ", decaf":"") + (cream? ", cream, ":"") + (sugar? ", sugar":"");
+		return "Coffee" + (decaf? ", decaf":"") + (cream? ", cream":"") + (sugar? ", sugar":"");
 		
 	}
 

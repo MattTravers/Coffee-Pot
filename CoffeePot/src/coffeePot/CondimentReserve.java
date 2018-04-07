@@ -5,7 +5,7 @@ public class CondimentReserve {
 	public boolean check(Drink drink) {
 		// TODO Auto-generated method stub
 		// Use drink iterator to check ingredients
-		return false;
+		return true;
 	}
 
 	public void changeReserve(Drink drink) {
