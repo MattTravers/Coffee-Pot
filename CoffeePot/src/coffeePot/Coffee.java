@@ -1,5 +1,6 @@
 package coffeePot;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Coffee implements Drink {
@@ -13,8 +14,6 @@ public class Coffee implements Drink {
 		this.sugar = sugar;
 		this.decaf = decaf;
 	}
-	
-	// THIS COMMENT WAS NOT HERE BEFORE
 	
 	@Override
 	public int getPrice() {
@@ -31,8 +30,19 @@ public class Coffee implements Drink {
 	@Override
 	public Iterator<String> getIterator() {
 		// TODO Auto-generated method stub
-		return null;
+		ArrayList<String> ingredients = new ArrayList<String>();
+		if(!decaf) {
+		ingredients.add("Coffee");
+		}
+		else {
+			ingredients.add("Decaf");
+		}
+		if(sugar)
+			ingredients.add("Sugar");
+		if(cream)
+			ingredients.add("Cream");
+		
+		return ingredients.iterator();
 	}
-	
-	//TEST CHANGE FOR GITHUB 
+		 
 }

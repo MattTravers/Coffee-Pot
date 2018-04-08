@@ -13,6 +13,5 @@ public class CondimentReserve {
 		// Use drink iterator to deduct ingredients
 		
 	}
-
 }
 

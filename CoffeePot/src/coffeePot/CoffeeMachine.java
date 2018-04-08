@@ -39,17 +39,20 @@ public class CoffeeMachine {
 	public String serveCoffee(Drink drink) {
 		
 		if (!condimentReserve.check(drink)) {
-			System.out.println("Coffee Machine is out of ingredients for " + drink);
-			return "Coffee Machine is out of ingredients for " + drink;
+			String s = "Coffee Machine is out of ingredients for " + drink;
+			System.out.println(s);
+			return s;
 		} else if(!coinSlot.isEnough(drink.getPrice())) {
-			System.out.println("Please insert more money");
-			return "Please insert more money";
+			String s = "Please insert more money";
+			System.out.println(s);
+			return s;
 		}
 		else {
 			condimentReserve.changeReserve(drink);
 			coinSlot.deduct(drink.getPrice());
-			System.out.println("Coffee Machine dispenses " + drink);
-			return "Coffee Machine dispenses " + drink;
+			String s = "Coffee Machine dispenses " + drink;
+			System.out.println(s);
+			return s;
 		}
 
 	}

@@ -1,14 +1,10 @@
 package coffeePot;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class ChickenBroth implements Drink {
 	private final int price = 65;
-	private boolean chickenBroth;
-
-	public ChickenBroth() {
-		this.chickenBroth = true;
-	}
 
 	@Override
 	public int getPrice() {
@@ -22,7 +18,8 @@ public class ChickenBroth implements Drink {
 
 	@Override
 	public Iterator<String> getIterator() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<String> ingredients = new ArrayList<String>();
+		ingredients.add("Chicken Broth");
+		return ingredients.iterator();
 	}
 }
