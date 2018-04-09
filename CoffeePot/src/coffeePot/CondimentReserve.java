@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 public class CondimentReserve {
 	
-	private static int reserve[]= {10, 10, 10, 1, 10, 10, 10};
+	private static int reserve[]= {10, 10, 10, 10, 10, 10, 10};
 	
 	private int stringConverter(String name){
 		switch(name) {

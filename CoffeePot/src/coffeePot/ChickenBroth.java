@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class ChickenBroth implements Drink {
+	
+	public ChickenBroth(){
+		super();
+	}
 	private final int price = 65;
 
 	@Override

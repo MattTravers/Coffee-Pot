@@ -13,7 +13,7 @@ public class CoffeeMachine {
 
 	//add coin method
 	public void addCoin(int value) {
-		System.out.println("Added " + value + "to the machine!");
+		System.out.println("Added " + value + " cents to the machine!");
 		coinSlot.insert(value);
 	}
 	//get balance
@@ -25,6 +25,11 @@ public class CoffeeMachine {
 	public int coinReturn() {
 		System.out.println("Returned " + coinSlot.getBalance());
 		return coinSlot.coinReturn();
+	}
+	
+	//restocks a particular condiment
+	public void restockReserve(String condiment, int amount) {
+		condimentReserve.setreserve(condiment, amount);
 	}
 	
 	

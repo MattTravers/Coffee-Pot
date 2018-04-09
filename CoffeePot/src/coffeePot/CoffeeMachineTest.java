@@ -20,6 +20,7 @@ public class CoffeeMachineTest {
 	@Before
 	public void setUp() {
 		coffeePot = new CoffeeMachine();
+		System.out.println("-----------------------------------------New Test Case-------------------------------------");
 	}
 
 	
@@ -63,6 +64,7 @@ public class CoffeeMachineTest {
 	// sugar after the first Dispenses one coffee, displays �out of sugar.�
 	@Test
 	public void testE() {
+		coffeePot.restockReserve("Sugar", 1);
 		Coffee coffee = new Coffee(false, true, true);
 		coffeePot.addCoin(80);
 		Assert.assertEquals("Coffee Machine dispenses " + coffee, coffeePot.serveCoffee(coffee));
@@ -77,7 +79,35 @@ public class CoffeeMachineTest {
 		Assert.assertEquals(0, coffeePot.getBalance());
 
 	}
+	
+	
+	//lets get some decaf
+	@Test
+	public void testG() {
+		coffeePot.addCoin(35);
+		Coffee coffee = new Coffee(true, false, false);
+		Assert.assertEquals("Coffee Machine dispenses " + coffee, coffeePot.serveCoffee(coffee));
 
+	}
+	
+	//...what about some chicken broth?
+	@Test
+	public void testH() {
+		coffeePot.addCoin(65);
+		ChickenBroth chickenBroth = new ChickenBroth();
+		Assert.assertEquals("Coffee Machine dispenses " + chickenBroth, coffeePot.serveCoffee(chickenBroth));
+
+	}
+	
+	
+	//...tea?
+	@Test
+	public void testI() {
+		coffeePot.addCoin(50);
+		Tea tea = new Tea(false, false, true);
+		Assert.assertEquals("Coffee Machine dispenses " + tea, coffeePot.serveCoffee(tea));
+
+	}
 	
 	@After
 	public void somethingThatNeedsDoingAfterEveryTestBesidesOrdinaryGarbageCollection() {

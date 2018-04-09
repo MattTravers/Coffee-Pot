@@ -9,7 +9,7 @@ public class CoinSlot {
 
 	public boolean isEnough(int price) {
 		// TODO Auto-generated method stub
-		return balance>price;
+		return balance >= price;
 	}
 	
 	
