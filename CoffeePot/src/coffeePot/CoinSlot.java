@@ -22,8 +22,11 @@ public class CoinSlot {
 		this.balance -= price;
 	}
 	
-	public int coinReturn() {
-		return this.balance;
+	public int coinReturn() 
+	{
+		int temp = this.balance;
+		this.balance = 0;
+		return temp;
 	}
 	
 	
