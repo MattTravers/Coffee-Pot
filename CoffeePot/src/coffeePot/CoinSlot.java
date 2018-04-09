@@ -27,7 +27,7 @@ public class CoinSlot {
 	}
 	
 	
-	// getters and setter
+	// getters and setters
 	public int getBalance() {
 		return this.balance;
 	}

@@ -19,7 +19,7 @@ public class ChickenBroth implements Drink {
 	@Override
 	public Iterator<String> getIterator() {
 		ArrayList<String> ingredients = new ArrayList<String>();
-		ingredients.add("Chicken Broth");
+		ingredients.add("ChickenBroth");
 		return ingredients.iterator();
 	}
 }

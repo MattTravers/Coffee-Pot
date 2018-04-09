@@ -63,6 +63,11 @@ public class CoffeeMachineTest {
 	// sugar after the first Dispenses one coffee, displays �out of sugar.�
 	@Test
 	public void testE() {
+		Coffee coffee = new Coffee(false, true, true);
+		coffeePot.addCoin(80);
+		Assert.assertEquals("Coffee Machine dispenses " + coffee, coffeePot.serveCoffee(coffee));
+		Assert.assertEquals("Coffee Machine is out of ingredients for " + coffee, coffeePot.serveCoffee(coffee));
+
 	}
 
 	
