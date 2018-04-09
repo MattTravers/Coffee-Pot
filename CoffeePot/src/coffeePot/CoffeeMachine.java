@@ -13,7 +13,7 @@ public class CoffeeMachine {
 
 	//add coin method
 	public void addCoin(int value) {
-		System.out.println("Added " + value + "to the machine!");
+		System.out.println("Added " + value + " to the machine!");
 		coinSlot.insert(value);
 	}
 	//get balance
