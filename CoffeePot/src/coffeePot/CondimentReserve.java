@@ -6,7 +6,7 @@ import java.util.Iterator;
 public class CondimentReserve {
 	
 
-	private int reserve[]= {10, 10, 10, 10, 10, 10, 10};
+	private int reserve[]= {10, 10, 10, 10, 10, 10, 10, 10, 10};
 
 	
 	private int stringConverter(String name){
@@ -25,6 +25,11 @@ public class CondimentReserve {
 			return 5;
 		case "ChickenBroth":
 			return 6;
+		case "Hot Cocoa":
+			return 7;
+		case "Marshmellows":
+			return 8;
+				
 		}
 		return -1;
 	}

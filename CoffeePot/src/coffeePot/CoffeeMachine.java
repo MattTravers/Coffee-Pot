@@ -41,7 +41,7 @@ public class CoffeeMachine {
 	 * takes a Drink object and checks balance and reserve, if okay, deducts from
 	 * balance and reserve and prints drink.
 	 */
-	public String serveCoffee(Drink drink) {
+	public String serveDrink(Drink drink) {
 		
 		if (!condimentReserve.check(drink)) {
 			String s = "Coffee Machine is out of ingredients for " + drink;
