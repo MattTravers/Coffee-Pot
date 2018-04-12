@@ -28,14 +28,14 @@ public class CoffeeMachineTest {
 	@Test
 	public void testA() {
 		coffeePot.addCoin(25);
-		Assert.assertFalse(coffeePot.isEnough(new Coffee(true,true,true)));		
+		Assert.assertFalse(coffeePot.isEnough(new Coffee(true,1,1)));		
 	}
 
 	
 	// Sally puts in two quarters, presses dispense Dispenses coffee.
 	@Test
 	public void testB() {
-		Coffee coffee = new Coffee(false, false, false);
+		Coffee coffee = new Coffee(false, 1, 1);
 		coffeePot.addCoin(25);
 		coffeePot.addCoin(25);
 		Assert.assertEquals("Coffee Machine dispenses " + coffee, coffeePot.serveCoffee(coffee));
@@ -65,7 +65,7 @@ public class CoffeeMachineTest {
 	@Test
 	public void testE() {
 		coffeePot.restockReserve("Sugar", 1);
-		Coffee coffee = new Coffee(false, true, true);
+		Coffee coffee = new Coffee(false, 1, 1);
 		coffeePot.addCoin(80);
 		Assert.assertEquals("Coffee Machine dispenses " + coffee, coffeePot.serveCoffee(coffee));
 		Assert.assertEquals("Coffee Machine is out of ingredients for " + coffee, coffeePot.serveCoffee(coffee));
@@ -85,7 +85,7 @@ public class CoffeeMachineTest {
 	@Test
 	public void testG() {
 		coffeePot.addCoin(35);
-		Coffee coffee = new Coffee(true, false, false);
+		Coffee coffee = new Coffee(true, 0, 0);
 		Assert.assertEquals("Coffee Machine dispenses " + coffee, coffeePot.serveCoffee(coffee));
 
 	}
@@ -104,7 +104,7 @@ public class CoffeeMachineTest {
 	@Test
 	public void testI() {
 		coffeePot.addCoin(50);
-		Tea tea = new Tea(false, false, true);
+		Tea tea = new Tea(0, 0, 1);
 		Assert.assertEquals("Coffee Machine dispenses " + tea, coffeePot.serveCoffee(tea));
 
 	}
