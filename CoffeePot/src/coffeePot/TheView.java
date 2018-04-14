@@ -15,9 +15,7 @@ public class TheView extends JFrame implements Observer{
 
 	//coinSlot window
 	private Container coinSlot;
-	
-	//condiment window
-	private Container condiment;
+
 	
 	//orderMenu window
 	private Container orderMenu;
@@ -35,7 +33,27 @@ public class TheView extends JFrame implements Observer{
 
 	private String drinks[] = {"Coffee", "Decafe","HotCocoa","Tea","ChickenBroth"};
 	
+	// Listener Events
+	  ActionListener listener = new ActionListener(){
+		  public void actionPerformed (ActionEvent e) {
+			  balanceField.setText("1");
+		  }
+	  };
+	  
+	  
+	  WindowListener windowListener = new WindowAdapter(){
+		
+		@Override
+		public void windowClosing (WindowEvent e) {
+			  orderWindow.dispose();
+			  coinSlotWindow.dispose();
+			  System.exit(0);
+		}
+	  };
+
+	
 	public TheView(){
+		
 		drinkSelection.setLayout(new GridLayout(drinks.length,3));
 
 		balanceField.setEnabled(false);
@@ -60,8 +78,8 @@ public class TheView extends JFrame implements Observer{
 		  for(int i = 0; i < coins.length; i++) {
 			  coinButtons[i] = new JButton(coins[i]);	
 			  
-			  if(i==1) {
-				  
+			  if(i==0) {
+				  coinButtons[i].addActionListener(listener);
 			  }
 			  
 			  coinSelection.add(coinButtons[i]);
@@ -90,6 +108,12 @@ public class TheView extends JFrame implements Observer{
 	  orderMenu.add(balanceSection,BorderLayout.NORTH);
 	  
 	  coinSlot.add(coinSelection,BorderLayout.CENTER);
+
+	  
+	  
+	  orderWindow.addWindowListener(windowListener);
+	  coinSlotWindow.addWindowListener(windowListener);
+	  
 	  
 	  coinSlotWindow.setVisible( true );
 	  orderWindow.setVisible( true );
