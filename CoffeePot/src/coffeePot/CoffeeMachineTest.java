@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class CoffeeMachineTest {
+public class CoffeeMachineTest {/*
 	private CoffeeMachine coffeePot;
 
 	
@@ -118,5 +118,5 @@ public class CoffeeMachineTest {
 	@AfterClass
 	public static void somethingAfterAllIsDoneLikeLoggingOutOfDatabase() {
 	}
-
+*/
 }
