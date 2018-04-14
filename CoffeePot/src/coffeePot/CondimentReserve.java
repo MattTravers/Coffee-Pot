@@ -73,6 +73,6 @@ public class CondimentReserve implements Subject {
 
 	@Override
 	public void notifyObservers() {
-		this.observer.update(this.state);
+		this.observer.update("Output",this.state);
 	}
 }

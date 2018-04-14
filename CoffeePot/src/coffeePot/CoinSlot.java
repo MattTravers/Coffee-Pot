@@ -48,6 +48,6 @@ public class CoinSlot implements Subject{
 
 		@Override
 	public void notifyObservers() {
-		this.observer.update("$" +this.getBalance()/100 +"."+this.getBalance()%100);
+		this.observer.update("Balance","$" +this.getBalance()/100 +"."+this.getBalance()%100);
 	}
 }

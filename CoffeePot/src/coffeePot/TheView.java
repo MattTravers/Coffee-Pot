@@ -33,7 +33,8 @@ public class TheView extends JFrame implements Observer {
 
 	private String drinks[] = { "Coffee", "Decafe", "HotCocoa", "Tea", "ChickenBroth" };
 
-	public TheView() {
+	public TheView(TheController theController) {
+		this.controller = theController;
 		drinkSelection.setLayout(new GridLayout(drinks.length, 3));
 		balanceField.setEnabled(false);
 		outputField.setEnabled(false);
@@ -91,14 +92,17 @@ public class TheView extends JFrame implements Observer {
 
 	}
 
-		@Override
-	public void update(String string) {
-		// TODO Auto-generated method stub
-
+	@Override
+	public void update(String type, String string) {
+		if (type.equals("Balance")) {
+			// update balance
+		} else {
+			// update Output
+		}
 	}
 
 	public static void main(String[] args) {
-		TheView view = new TheView();
+		TheView view = new TheView(new TheController());
 	}
 
 }
