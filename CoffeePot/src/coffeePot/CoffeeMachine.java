@@ -2,17 +2,11 @@ package coffeePot;
 
 public class CoffeeMachine {
 	public void main(String args[]) {
-		//TheController
 		TheController theController = new TheController();
-		//TheView
-		TheView theView = new TheView();
-		//CondimentReserve
+		TheView theView = new TheView(theController);
 		CondimentReserve condimentReserve = new CondimentReserve();
-		//coinSlot
+		condimentReserve.registerObserver(theView);
 		CoinSlot coinSlot = new CoinSlot();
-				
-		
-		//start view
-		//theView.run();
+		coinSlot.registerObserver(theView);
 	}
 }

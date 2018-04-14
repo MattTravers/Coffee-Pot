@@ -5,19 +5,19 @@ import java.awt.event.*;
 import javax.swing.event.*;
 import javax.swing.*;
 
-
-public class TheView extends JFrame implements Observer{
-	
+public class TheView extends JFrame implements Observer {
+	private TheController controller;
 	private JButton buttons[];
 	private JButton coinButtons[];
 	private JFrame orderWindow = new JFrame();
 	private JFrame coinSlotWindow = new JFrame();
 
-	//coinSlot window
+	// coinSlot window
 	private Container coinSlot;
 
-	
-	//orderMenu window
+
+
+	// orderMenu window
 	private Container orderMenu;
 	private JPanel coinSelection = new JPanel();
 	private JPanel drinkSelection = new JPanel();
@@ -27,9 +27,8 @@ public class TheView extends JFrame implements Observer{
 	private JLabel BALANCE = new JLabel("BALANCE");
 	private JTextField outputField = new JTextField("", 20);
 	private JTextField balanceField = new JTextField("", 20);
-	private JPanel buttonPanel = new JPanel();	
-
-	private String coins[] = {"penny", "nickel", "dime", "quarter"};
+	private JPanel buttonPanel = new JPanel();
+	private String coins[] = { "penny", "nickel", "dime", "quarter" };
 
 	private String drinks[] = {"Coffee", "Decafe","HotCocoa","Tea","ChickenBroth"};
 	
@@ -51,14 +50,12 @@ public class TheView extends JFrame implements Observer{
 		}
 	  };
 
-	
-	public TheView(){
-		
-		drinkSelection.setLayout(new GridLayout(drinks.length,3));
-
+	public TheView(TheController theController) {
+		this.controller = theController;
+		drinkSelection.setLayout(new GridLayout(drinks.length, 3));
 		balanceField.setEnabled(false);
 		outputField.setEnabled(false);
-		
+
 		buttons = new JButton[drinks.length];
 		coinButtons = new JButton[coins.length];
 
@@ -66,15 +63,16 @@ public class TheView extends JFrame implements Observer{
 		outputSection.add(outputField);
 		balanceSection.add(BALANCE);
 		balanceSection.add(balanceField);
-		
+
 		// implement drink buttons
-		for(int i = 0; i < drinks.length; i++) {
-		  buttons[i] = new JButton(drinks[i]);	
-		  drinkSelection.add(buttons[i]);
-		  
+		for (int i = 0; i < drinks.length; i++) {
+			buttons[i] = new JButton(drinks[i]);
+			drinkSelection.add(buttons[i]);
+
 		}
-		
+
 		// implement coin buttons
+
 		  for(int i = 0; i < coins.length; i++) {
 			  coinButtons[i] = new JButton(coins[i]);	
 			  
@@ -119,19 +117,19 @@ public class TheView extends JFrame implements Observer{
 	  orderWindow.setVisible( true );
 	  
 	 
-	
 	}
-
 
 	@Override
-	public void update(String string) {
-	// TODO Auto-generated method stub
-	
+	public void update(String type, String string) {
+		if (type.equals("Balance")) {
+			// update balance
+		} else {
+			// update Output
+		}
 	}
 
-
-	public static void main(String[] args){
-		TheView view = new TheView();	  
+	public static void main(String[] args) {
+		TheView view = new TheView(new TheController());
 	}
 
 }
