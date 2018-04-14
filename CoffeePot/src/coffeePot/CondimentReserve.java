@@ -2,15 +2,11 @@ package coffeePot;
 
 import java.util.Iterator;
 
-
 public class CondimentReserve {
-	
+	private int reserve[] = { 10, 10, 10, 10, 10, 10, 10, 10, 10 };
 
-	private int reserve[]= {10, 10, 10, 10, 10, 10, 10};
-
-	
-	private int stringConverter(String name){
-		switch(name) {
+	private int stringConverter(String name) {
+		switch (name) {
 		case "Coffee":
 			return 0;
 		case "Tea":
@@ -25,18 +21,21 @@ public class CondimentReserve {
 			return 5;
 		case "ChickenBroth":
 			return 6;
+		case "Hot Cocoa":
+			return 7;
+		case "Marshmellows":
+			return 8;
 		}
 		return -1;
 	}
-		
 
 	public boolean check(Drink drink) {
-		
+
 		Iterator<String> it = drink.getIterator();
-		
-		while(it.hasNext()){
-			String name = it.next();
-			if(reserve[stringConverter(name)] < 1){
+
+		while (it.hasNext()) {
+			String[] name = it.next().split(" ");
+			if (reserve[stringConverter(name[0])] < name[1].charAt(0) - '0') {
 				System.out.println("Error: not enough " + name);
 				return false;
 			}
@@ -46,24 +45,23 @@ public class CondimentReserve {
 
 	public void changeReserve(Drink drink) {
 		Iterator<String> it = drink.getIterator();
-		
-		while(it.hasNext()){
-			String name = it.next();
-			if(stringConverter(name) == -1){
-				
-			}else{
-				reserve[stringConverter(name)] --;
+
+		while (it.hasNext()) {
+			String[] name = it.next().split(" ");
+			if (stringConverter(name[0]) == -1) {
+
+			} else {
+				reserve[stringConverter(name[0])] -= name[1].charAt(0) - '0';
 			}
 		}
 	}
-	
+
 	public int getReserve(String condiment) {
 		return reserve[stringConverter(condiment)];
-		
+
 	}
-	
+
 	public void setreserve(String condiment, int value) {
 		this.reserve[stringConverter(condiment)] = value;
 	}
 }
-
