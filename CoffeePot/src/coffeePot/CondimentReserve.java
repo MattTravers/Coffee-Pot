@@ -2,9 +2,10 @@ package coffeePot;
 
 import java.util.Iterator;
 
-public class CondimentReserve {
+public class CondimentReserve implements Subject {
 	private int reserve[] = { 10, 10, 10, 10, 10, 10, 10, 10, 10 };
-
+	private Observer observer;
+	private String state;
 	private int stringConverter(String name) {
 		switch (name) {
 		case "Coffee":
@@ -63,5 +64,15 @@ public class CondimentReserve {
 
 	public void setreserve(String condiment, int value) {
 		this.reserve[stringConverter(condiment)] = value;
+	}
+
+	@Override
+	public void registerObserver(Observer observer) {
+		this.observer = observer;
+	}
+
+	@Override
+	public void notifyObservers() {
+		this.observer.update(this.state);
 	}
 }

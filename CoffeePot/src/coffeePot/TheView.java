@@ -6,7 +6,7 @@ import javax.swing.event.*;
 import javax.swing.*;
 
 
-public class TheView extends JFrame{
+public class TheView extends JFrame implements Observer{
 	
 	private JButton buttons[];
 	private JButton coinButtons[];

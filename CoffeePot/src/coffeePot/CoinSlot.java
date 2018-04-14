@@ -1,7 +1,7 @@
 package coffeePot;
 
-public class CoinSlot {
-	
+public class CoinSlot implements Subject{
+	private Observer observer;
 	
 	// in cents
 	private int balance = 0;
@@ -37,5 +37,17 @@ public class CoinSlot {
 	
 	public void setBalance(int amount) {
 		this.balance = amount;
+	}
+
+
+	@Override
+	public void registerObserver(Observer observer) {
+		this.observer = observer;
+	}
+
+
+		@Override
+	public void notifyObservers() {
+		this.observer.update("$" +this.getBalance()/100 +"."+this.getBalance()%100);
 	}
 }
