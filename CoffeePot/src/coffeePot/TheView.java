@@ -16,6 +16,20 @@ public class TheView extends JFrame{
 	private JPanel buttonPanel = new JPanel();	
 	private JPanel texts = new JPanel();
 
+	/*
+	 private JPanel displayPanel = new JPanel();
+	    // JPanel displayPanel = new JPanel( new GridLayout( 4, 2 ) );
+	    // JPanel displayPanel = new JPanel( new BorderLayout() );
+	    // JPanel displayPanel = new JPanel( new GridBagLayout() );
+
+	    JTextField titleText = new JTextField( "title" );
+
+	    titleText.setPreferredSize( new Dimension( 200, 24 ) );
+
+	    // For FlowLayout and GridLayout, uncomment:
+	    displayPanel.add( titleText );
+	*/
+
 	private String drinks[] = {"Coffee", "Decafe","HotCocoa","Tea","ChickenBroth"};
 	
 	public TheView(){
