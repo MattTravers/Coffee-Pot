@@ -98,7 +98,16 @@ public class TheView extends JFrame implements Observer{
 	
 	}
 
-public static void main(String[] args){
-	TheView view = new TheView();	  
+
+	@Override
+	public void update(String string) {
+	// TODO Auto-generated method stub
+	
 	}
+
+
+	public static void main(String[] args){
+		TheView view = new TheView();	  
+	}
+
 }
