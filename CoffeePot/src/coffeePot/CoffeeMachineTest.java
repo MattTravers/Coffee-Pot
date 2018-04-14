@@ -62,7 +62,7 @@ public class CoffeeMachineTest {
 
 	
 	// Sally buys two coffees, white with sugar. The sugar dispenser runs out of
-	// sugar after the first Dispenses one coffee, displays �out of sugar.�
+	// sugar after the first Dispenses one coffee, displays out of sugar.
 	@Test
 	public void testE() {
 		coffeePot.restockReserve("Sugar", 1);
