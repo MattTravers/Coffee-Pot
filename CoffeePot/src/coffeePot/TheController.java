@@ -2,6 +2,7 @@ package coffeePot;
 
 public class TheController {
 	// Attributes
+	private TheView view;
 	private CondimentReserve condimentReserve;
 	private CoinSlot coinSlot;
 

@@ -1,12 +1,30 @@
 package coffeePot;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.event.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class TheView extends JFrame implements Observer {
+	//non-view attributes
 	private TheController controller;
+	private Scanner menuFile;
+	private ArrayList<Drink> drinkMenu;
+	
 	private JButton buttons[];
 	private JButton coinButtons[];
 	private JFrame orderWindow = new JFrame();
@@ -14,8 +32,6 @@ public class TheView extends JFrame implements Observer {
 
 	// coinSlot window
 	private Container coinSlot;
-
-
 
 	// orderMenu window
 	private Container orderMenu;
@@ -52,6 +68,26 @@ public class TheView extends JFrame implements Observer {
 
 	public TheView(TheController theController) {
 		this.controller = theController;
+		
+		//getting the drink menu from the text file
+		this.drinkMenu = new ArrayList<Drink>();
+		try {
+			menuFile = new Scanner(new File("menu.in"));
+		} catch (Exception e) {
+			System.out.println("Missing menu file");
+			System.exit(1);
+		}
+		
+		while (menuFile.hasNextLine()) {
+			String drinkName = menuFile.nextLine();
+			int drinkPrice = Integer.parseInt(menuFile.nextLine());
+			Drink drink = new Drink(drinkName,drinkPrice);
+			String ingredient = menuFile.nextLine();
+			while(!ingredient.equals("endDrink")) {
+				drink.addIngredient(ingredient,0);
+			}
+		}
+		
 		drinkSelection.setLayout(new GridLayout(drinks.length, 3));
 		balanceField.setEnabled(false);
 		outputField.setEnabled(false);
@@ -123,7 +159,7 @@ public class TheView extends JFrame implements Observer {
 	public void update(String type, String string) {
 		if (type.equals("Balance")) {
 			// update balance
-		} else {
+		} else { //if output
 			// update Output
 		}
 	}
