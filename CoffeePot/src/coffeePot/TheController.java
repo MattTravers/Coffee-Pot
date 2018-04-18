@@ -108,6 +108,7 @@ public class TheController {
 				 */
 
 				view.display(drinkName);
+				dispenser.setDrinkName(drinkName);
 			}
 		};
 
