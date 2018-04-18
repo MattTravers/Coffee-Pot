@@ -112,6 +112,7 @@ public class TheController {
 					view.updateOutput("Amount of " +i.getName() + ": "+ i.getAmount() );
 				}
 
+				dispenser.increaseIngredient(button.getText());
 			}
 		};
 
@@ -134,6 +135,7 @@ public class TheController {
 					}
 				}
 				System.out.println(ingredientChanges);
+				dispenser.decreaseIngredient(button.getText());
 
 			}
 		};
