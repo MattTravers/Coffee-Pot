@@ -99,26 +99,16 @@ public class TheController {
 				String drinkName = button.getText();
 				System.out.println(drinkName);
 
-				// Stuff in Dispenser
-				/*
-				 * ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
-				 * 
-				 * for(Drink drink: drinkMenu) { if(drink.getName() == drinkName){ ingredients =
-				 * drink.getIngredients(); } }
-				 */
+				 ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+				 
+				 for(Drink drink: drinkMenu) { if(drink.getName() == drinkName){ ingredients =
+				 drink.getIngredients(); } }
+				 
 
-				view.display(drinkName);
+				view.displayIngredientsMenu(ingredients);
 			}
 		};
 
 		return drinkPressed;
 	}
-
-	WindowListener windowListener = new WindowAdapter() {
-
-		@Override
-		public void windowClosing(WindowEvent e) {
-			System.exit(0);
-		}
-	};
 }
