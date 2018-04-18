@@ -134,6 +134,8 @@ public class TheView extends JFrame implements Observer {
 		JButton ingriedentMinusButtons[];
 		JButton submit = new JButton("SUBMIT");
 		
+		submit.addActionListener(controller.submit(submit));
+		
 		JFrame ingredientsWindow = new JFrame();
 
 		JPanel ingredientSelection = new JPanel();
@@ -145,15 +147,12 @@ public class TheView extends JFrame implements Observer {
 
 		
 		for(int i = 0 ; i < ingredients.size(); i++){
-			ingriedentPlusButtons[i] = new JButton("-"+ingredients.get(i).getName());
-			ingriedentMinusButtons[i] = new JButton("-"+ingredients.get(i).getName()+"-");
+			ingriedentPlusButtons[i] = new JButton(ingredients.get(i).getName());
+			ingriedentMinusButtons[i] = new JButton(ingredients.get(i).getName());
 			ingriedentPlusButtons[i].addActionListener(controller.incrementIngredient(ingriedentPlusButtons[i]));
 			ingriedentMinusButtons[i].addActionListener(controller.decrementIngredient(ingriedentMinusButtons[i]));
-			numIngr[i] = new JTextField(ingredients.get(i).getName(), 5);
-			numIngr[i].setEnabled(false);
 			ingredientSelection.add(ingriedentPlusButtons[i]);
 			ingredientSelection.add(ingriedentMinusButtons[i]);
-			ingredientSelection.add(numIngr[i]);
 		}
 		
 		ingredientSelection.add(submit);
