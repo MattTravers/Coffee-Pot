@@ -183,7 +183,7 @@ public class TheView extends JFrame implements Observer {
 		if (type.equals("Balance")) {
 			balanceField.setText(string);
 		} else { //if output
-			// update Output
+			this.updateOutput(string);
 		}
 	}
 
