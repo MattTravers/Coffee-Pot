@@ -3,6 +3,14 @@ package coffeePot;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
 
 public class TheController {
 	// Attributes
@@ -82,4 +90,34 @@ public class TheController {
 		return coinSlot.isEnough(drink.getPrice());
 	}
 
+	public ActionListener makeActionListener(JButton button) {
+
+		ActionListener drinkPressed = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				String drinkName = button.getText();
+				System.out.println(drinkName);
+
+				// Stuff in Dispenser
+				/*
+				 * ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+				 * 
+				 * for(Drink drink: drinkMenu) { if(drink.getName() == drinkName){ ingredients =
+				 * drink.getIngredients(); } }
+				 */
+
+				view.display(drinkName);
+			}
+		};
+
+		return drinkPressed;
+	}
+
+	WindowListener windowListener = new WindowAdapter() {
+
+		@Override
+		public void windowClosing(WindowEvent e) {
+			System.exit(0);
+		}
+	};
 }

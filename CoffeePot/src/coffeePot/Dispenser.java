@@ -53,7 +53,7 @@ public class Dispenser implements Subject {
 			reserve[stringConverter(i.getName())] -= i.getAmount();
 		}
 	}
-
+	
 	public int getReserve(String condiment) {
 		return reserve[stringConverter(condiment)];
 
