@@ -16,6 +16,10 @@ public class TheController {
 	private TheView view;
 	private Dispenser dispenser;
 	private CoinSlot coinSlot;
+	
+	private int totalIncrease = 0;
+	private int totalDecrease = 0;
+	
 
 	// Attributes for creating the drinkMenu
 	private Scanner menuFile;
@@ -77,25 +81,65 @@ public class TheController {
 	}
 
 	// drink buttons
-	public ActionListener makeActionListener(JButton button) {
+	public ActionListener drinkSelect(JButton button) {
 
 		ActionListener drinkPressed = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
 				String drinkName = button.getText();
-				System.out.println(drinkName);
 
-				view.display(drinkName);
+				for(Drink drink: drinkMenu) {
+					if(drink.getName() == drinkName) {
+						ingredients = drink.getIngredients();
+					}
+				}
+
+				view.displayIngredientsMenu(ingredients);
 				dispenser.setDrinkName(drinkName);
+
 			}
 		};
 
 		return drinkPressed;
 	}
 
-	// ingredient decrease button
-	
+
+
 	// ingredient increase button
-	
-	// submit
+	public ActionListener incrementIngredient(JButton button) {
+
+		ActionListener increasePressed = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				totalIncrease++;
+
+			}
+		};
+		
+		return increasePressed;
+	}
+		
+	// ingredient decrease button
+		public ActionListener decrementIngredient(JButton button) {
+
+			ActionListener decreasePressed = new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+
+					totalDecrease++;
+
+				}
+			};
+			
+			return decreasePressed;
+		}
+
+
+// update balance
+		public void updateBalance() {
+			view.updateBalanceView(coinSlot.getBalance());
+		}
 }
+	// submit
+
+
