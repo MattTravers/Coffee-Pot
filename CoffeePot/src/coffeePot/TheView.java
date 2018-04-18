@@ -85,6 +85,7 @@ public class TheView extends JFrame implements Observer {
 			String ingredient = menuFile.nextLine();
 			while(!ingredient.equals("endDrink")) {
 				drink.addIngredient(ingredient,0);
+				ingredient = menuFile.nextLine();
 			}
 		}
 		
