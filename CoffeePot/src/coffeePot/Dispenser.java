@@ -1,6 +1,6 @@
 package coffeePot;
 
-public class CondimentReserve implements Subject {
+public class Dispenser implements Subject {
 	private int reserve[] = { 10, 10, 10, 10, 10, 10, 10, 10, 10 };
 	private Observer observer;
 	private String state;
