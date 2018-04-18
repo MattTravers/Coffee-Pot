@@ -145,9 +145,11 @@ public class TheView extends JFrame implements Observer {
 
 		
 		for(int i = 0 ; i < ingredients.size(); i++){
-			ingriedentPlusButtons[i] = new JButton("+" + ingredients.get(i).getName());
-			ingriedentMinusButtons[i] = new JButton("-" + ingredients.get(i).getName());
-			numIngr[i] = new JTextField(ingredients.get(i).getName()+": ", 5);
+			ingriedentPlusButtons[i] = new JButton("-"+ingredients.get(i).getName());
+			ingriedentMinusButtons[i] = new JButton("-"+ingredients.get(i).getName()+"-");
+			ingriedentPlusButtons[i].addActionListener(controller.incrementIngredient(ingriedentPlusButtons[i]));
+			ingriedentMinusButtons[i].addActionListener(controller.decrementIngredient(ingriedentMinusButtons[i]));
+			numIngr[i] = new JTextField(ingredients.get(i).getName(), 5);
 			numIngr[i].setEnabled(false);
 			ingredientSelection.add(ingriedentPlusButtons[i]);
 			ingredientSelection.add(ingriedentMinusButtons[i]);
@@ -170,17 +172,10 @@ public class TheView extends JFrame implements Observer {
 		ingredientsWindow.setVisible( true );
 	}
 	
-	// Update Views
-	public void updateCondimentCount(Ingredient ingredient) {
-		
-		for(JTextField t: numIngr) {
-			if(t.getText() == ingredient.getName() + ": ") {
-				t.setText(ingredient.getName() + ": "+ingredient.getAmount());
-			}
-		}
+
+	public void updateOutput(String string) {
+		outputField.setText(string);
 	}
-	
-	
 	
 
 	@Override

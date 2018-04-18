@@ -99,17 +99,17 @@ public class TheController {
 				boolean inList = false;
 
 				for (Ingredient i : ingredientChanges) {
-					if (button.getText().substring(0) == i.getName()) {
+					if (button.getText() == i.getName()) {
 						i.increaseAmount();
-						view.updateCondimentCount(i);
+						view.updateOutput("Amount of " +i.getName() + ": "+ i.getAmount() );
 						inList = true;
 					}
 				}
 
 				if (!inList) {
-					Ingredient i = new Ingredient(button.getText().substring(0), 1);
+					Ingredient i = new Ingredient(button.getText(), 1);
 					ingredientChanges.add(i);
-					view.updateCondimentCount(i);
+					view.updateOutput("Amount of " +i.getName() + ": "+ i.getAmount() );
 				}
 
 			}
@@ -127,12 +127,13 @@ public class TheController {
 				boolean inList = false;
 
 				for (Ingredient i : ingredientChanges) {
-					if (button.getText().substring(0) == i.getName()) {
+					if (button.getText() == i.getName()) {
 						i.decreaseAmount();
-						view.updateCondimentCount(i);
+						view.updateOutput("Amount of " +i.getName() + ": "+ i.getAmount() );
 						inList = true;
 					}
 				}
+				System.out.println(ingredientChanges);
 
 			}
 		};
