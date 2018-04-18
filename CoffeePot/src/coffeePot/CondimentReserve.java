@@ -1,11 +1,10 @@
 package coffeePot;
 
-import java.util.Iterator;
-
 public class CondimentReserve implements Subject {
 	private int reserve[] = { 10, 10, 10, 10, 10, 10, 10, 10, 10 };
 	private Observer observer;
 	private String state;
+
 	private int stringConverter(String name) {
 		switch (name) {
 		case "Coffee":
@@ -31,13 +30,11 @@ public class CondimentReserve implements Subject {
 	}
 
 	public boolean check(Drink drink) {
-
-		Iterator<String> it = drink.getIterator();
-
-		while (it.hasNext()) {
-			String[] name = it.next().split(" ");
-			if (reserve[stringConverter(name[0])] < name[1].charAt(0) - '0') {
-				System.out.println("Error: not enough " + name);
+		for (Ingredient i : drink) {
+			String name = i.getName();
+			if (reserve[stringConverter(name)] < i.getAmount()) {
+				//TO DO: change to update view instead of output to console
+				System.out.println("Error: not enough " + name); 
 				return false;
 			}
 		}
@@ -45,15 +42,8 @@ public class CondimentReserve implements Subject {
 	}
 
 	public void changeReserve(Drink drink) {
-		Iterator<String> it = drink.getIterator();
-
-		while (it.hasNext()) {
-			String[] name = it.next().split(" ");
-			if (stringConverter(name[0]) == -1) {
-
-			} else {
-				reserve[stringConverter(name[0])] -= name[1].charAt(0) - '0';
-			}
+		for (Ingredient i : drink) {
+			reserve[stringConverter(i.getName())] -= i.getAmount();
 		}
 	}
 
@@ -73,6 +63,6 @@ public class CondimentReserve implements Subject {
 
 	@Override
 	public void notifyObservers() {
-		this.observer.update("Output",this.state);
+		this.observer.update("Output", this.state);
 	}
 }
