@@ -1,5 +1,6 @@
 package coffeePot;
 
+import java.util.*;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -33,8 +34,16 @@ public class TheView extends JFrame implements Observer {
 	private Scanner menuFile;
 	private ArrayList<Drink> drinkMenu;
 	
+	public Drink tea = new Drink("tea", 111);
+
+	public Drink lol = new Drink("lol", 3);
+	public Drink yo = new Drink("yo", 11231);
+	public Drink ma = new Drink("ma", 11231);
+	public Drink ho = new Drink("ho", 11331);
+	///
 	private JButton drinkButtons[];
 	private JButton coinButtons[];
+	private JButton ingriedentButtons[];
 	private JButton upButtons[];
 	private JButton downButtons[];
 
@@ -49,14 +58,18 @@ public class TheView extends JFrame implements Observer {
 	
 	private JPanel coinSelection = new JPanel();
 	private JPanel drinkSelection = new JPanel();
+	private JPanel ingredientSelection = new JPanel();
+
 	
 	private JPanel outputSection = new JPanel();
 	private JPanel balanceSection = new JPanel();
 	private JPanel buttonPanel = new JPanel();
 	private JPanel condimentPanel = new JPanel();
 	
+	///
 	private JLabel OUTPUT = new JLabel("OUTPUT");
 	private JLabel BALANCE = new JLabel("BALANCE");
+	
 	
 	private JTextField outputField = new JTextField("", 20);
 	private JTextField balanceField = new JTextField("", 20);
@@ -65,20 +78,19 @@ public class TheView extends JFrame implements Observer {
 	
 	// Listener Events
 
-	  
-	  WindowListener windowListener = new WindowAdapter(){
-		
-		@Override
-		public void windowClosing (WindowEvent e) {
-			  orderWindow.dispose();
-			  coinSlotWindow.dispose();
-			  System.exit(0);
-		}
-	  };
-
 	public TheView(TheController theController) {
 		this.controller = theController;
 		
+		drinkMenu = new ArrayList<Drink>();
+		tea.addIngredient("moar",10000);
+		
+		drinkMenu.add(tea);
+		drinkMenu.add(lol);
+		drinkMenu.add(yo);
+		drinkMenu.add(ma);
+		drinkMenu.add(ho);
+		
+		/*
 		//getting the drink menu from the text file
 		this.drinkMenu = new ArrayList<Drink>();
 		try {
@@ -98,27 +110,26 @@ public class TheView extends JFrame implements Observer {
 				ingredient = menuFile.nextLine();
 			}
 		}
+		*/
 		
 		drinkSelection.setLayout(new GridLayout(drinkMenu.size(), 3));
 		balanceField.setEnabled(false);
 		outputField.setEnabled(false);
 
-		// instantiate buttons
 		drinkButtons = new JButton[drinkMenu.size()];
 		coinButtons = new JButton[drinkMenu.size()];
 		upButtons = new JButton[drinkMenu.size()];
 		downButtons = new JButton[drinkMenu.size()];
 
-		outputSection.add(OUTPUT);
-		outputSection.add(outputField);
-		balanceSection.add(BALANCE);
-		balanceSection.add(balanceField);
 
 		// implement drink buttons
 		for (int i = 0; i < drinkMenu.size(); i++) {
 			drinkButtons[i] = new JButton(drinkMenu.get(i).getName());
 			upButtons[i] = new BasicArrowButton(BasicArrowButton.NORTH);
 			downButtons[i] = new BasicArrowButton(BasicArrowButton.SOUTH);
+			
+			drinkButtons[i].addActionListener(controller.makeActionListener(drinkButtons[i]));
+			
 			drinkSelection.add(drinkButtons[i]);
 			condimentPanel.add(upButtons[i]);
 			condimentPanel.add(downButtons[i]);
@@ -132,6 +143,11 @@ public class TheView extends JFrame implements Observer {
 		  }
 		  
       Color WHITE = new Color(250,250,250);
+      
+	  outputSection.add(OUTPUT);
+	  outputSection.add(outputField);
+	  balanceSection.add(BALANCE);
+	  balanceSection.add(balanceField);
       
       coinSlot = coinSlotWindow.getContentPane();
 	  coinSlotWindow.setTitle("Coin Slot");
@@ -157,14 +173,52 @@ public class TheView extends JFrame implements Observer {
 
 	  
 	  
-	  orderWindow.addWindowListener(windowListener);
-	  coinSlotWindow.addWindowListener(windowListener);
+	  orderWindow.addWindowListener(controller.windowListener);
+	  coinSlotWindow.addWindowListener(controller.windowListener);
 	  
 	  
 	  coinSlotWindow.setVisible( true );
 	  orderWindow.setVisible( true );
 	  
 	 
+	}
+	
+	public void displayIngredientsMenu(ArrayList<Ingredient> ingredients){
+		
+		ingriedentButtons = new JButton[ingredients.size()];
+		
+		
+		for(int i = 0 ; i < ingredients.size(); i++){
+			ingriedentButtons[i] = new JButton(ingredients.get(i).getName());
+			ingredientSelection.add(ingriedentButtons[i]);
+		}
+		
+		  orderMenu.add(ingredientSelection,BorderLayout.CENTER);
+		
+	}
+	
+	//test
+	public void display(String str){
+		
+		JLabel name = new JLabel("You Pressed "+ str);
+		
+		System.out.println("it twerked");
+		  //orderMenu.removeAll(); 
+
+		  //orderMenu.add(name,BorderLayout.CENTER);
+		
+	}
+	
+	public void makeButtons() {
+		
+		String coins[] = { "penny", "nickel", "dime", "quarter" };
+
+		JButton drinkButtons[];
+		JButton coinButtons[];
+		JButton upButtons[];
+		JButton downButtons[];
+		
+
 	}
 	
 	

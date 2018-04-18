@@ -26,6 +26,10 @@ public class Drink implements Iterable<Ingredient> {
 	public int getPrice() {
 		return price;
 	}
+	
+	public ArrayList<Ingredient> getIngredients() {
+		return ingredients;
+	}
 
 	@Override
 	public Iterator<Ingredient> iterator() {
