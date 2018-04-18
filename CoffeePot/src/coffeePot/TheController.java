@@ -8,12 +8,12 @@ import javax.swing.JButton;
 public class TheController {
 	// Attributes
 	private TheView view;
-	private CondimentReserve condimentReserve;
+	private Dispenser dispenser;
 	private CoinSlot coinSlot;
 
 	// Constructor
 	public TheController() {
-		condimentReserve = new CondimentReserve();
+		dispenser = new Dispenser();
 		coinSlot = new CoinSlot();
 	}
 
@@ -35,7 +35,7 @@ public class TheController {
 	
 	//restocks a particular condiment
 	public void restockReserve(String condiment, int amount) {
-		condimentReserve.setreserve(condiment, amount);
+		dispenser.setreserve(condiment, amount);
 	}
 	
 	
@@ -49,7 +49,7 @@ public class TheController {
 	 */
 	public String serveDrink(Drink drink) {
 		
-		if (!condimentReserve.check(drink)) {
+		if (!dispenser.check(drink)) {
 			String s = "Coffee Machine is out of ingredients for " + drink;
 			System.out.println(s);
 			return s;
@@ -59,7 +59,7 @@ public class TheController {
 			return s;
 		}
 		else {
-			condimentReserve.changeReserve(drink);
+			dispenser.changeReserve(drink);
 			coinSlot.deduct(drink.getPrice());
 			String s = "Coffee Machine dispenses " + drink;
 			System.out.println(s);
