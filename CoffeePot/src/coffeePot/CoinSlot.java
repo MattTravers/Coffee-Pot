@@ -3,7 +3,7 @@ package coffeePot;
 public class CoinSlot implements Subject {
 	private Observer observer;
 	private int[] coins = new int[6];
-	private String[] money = { "Penny", "Nickle", "Dime", "Quarter", "Dollar", "Five" };
+	private String[] money = { "penny", "nickle", "dime", "quarter", "dollar", "five" };
 
 	// in cents
 	private int balance = 0;

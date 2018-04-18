@@ -70,7 +70,7 @@ public class TheController {
 	// TODO convert all these methods to action listeners????
 	// add coin
 	public void addCoin(String money) {
-		System.out.println("Added " + value + " cents to the machine!");
+		//System.out.println("Added " + value + " cents to the machine!");
 		coinSlot.insert(money);
 	}
 
@@ -158,22 +158,13 @@ public class TheController {
 			return decreasePressed;
 		}
 
-		
+		//this is the add Coin method
 		public ActionListener addBalance(JButton button) {
 
 			ActionListener addBalance = new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					
-					if(button.getText() == "penny")
-						coinSlot.insert(1);
-					else if(button.getText() == "nickel")
-						coinSlot.insert(5);
-					else if(button.getText() == "dime")
-						coinSlot.insert(10);
-					else if(button.getText() == "quarter")
-						coinSlot.insert(25);
-
-			
+					coinSlot.insert(button.getText());
 					updateBalance();
 					
 				}
