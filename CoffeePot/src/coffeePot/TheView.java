@@ -33,21 +33,20 @@ public class TheView extends JFrame implements Observer {
 	private Scanner menuFile;
 	private ArrayList<Drink> drinkMenu;
 	
-	private JButton buttons[];
-	
+	private JButton drinkButtons[];
 	private JButton coinButtons[];
 	private JButton upButtons[];
 	private JButton downButtons[];
 
-
+	
 	private JFrame orderWindow = new JFrame();
 	private JFrame coinSlotWindow = new JFrame();
 
-	// coinSlot window
-	private Container coinSlot;
 
-	// orderMenu window
+	private Container coinSlot;
 	private Container orderMenu;
+	
+	
 	private JPanel coinSelection = new JPanel();
 	private JPanel drinkSelection = new JPanel();
 	
@@ -58,54 +57,15 @@ public class TheView extends JFrame implements Observer {
 	
 	private JLabel OUTPUT = new JLabel("OUTPUT");
 	private JLabel BALANCE = new JLabel("BALANCE");
-	private JLabel Coffee = new JLabel("Coffee");
-	private JLabel Decafe = new JLabel("Decafe");
-	private JLabel Tea = new JLabel("Tea");
-	private JLabel HotCocoa = new JLabel("HotCocoa");
-	private JLabel ChickenBroth = new JLabel("ChickenBroth");
 	
 	private JTextField outputField = new JTextField("", 20);
 	private JTextField balanceField = new JTextField("", 20);
 	
 	private String coins[] = { "penny", "nickel", "dime", "quarter" };
-	private String drinks[] = {"Coffee", "Decafe","HotCocoa","Tea","ChickenBroth"};
 	
 	// Listener Events
-	  ActionListener listener = new ActionListener(){
-		  public void actionPerformed (ActionEvent e) {
-			  balanceField.setText("1");
-		  }
-	  };
+
 	  
-	  ActionListener coffeeClick = new ActionListener(){
-		  public void actionPerformed (ActionEvent e) {
-			  balanceField.setText("1");
-		  }
-	  };
-	  
-	  ActionListener hotCocoaClick = new ActionListener(){
-		  public void actionPerformed (ActionEvent e) {
-			  balanceField.setText("1");
-		  }
-	  };
-	  
-	  ActionListener decafClick = new ActionListener(){
-		  public void actionPerformed (ActionEvent e) {
-			  balanceField.setText("1");
-		  }
-	  };
-	  
-	  ActionListener teaClick = new ActionListener(){
-		  public void actionPerformed (ActionEvent e) {
-			  balanceField.setText("1");
-		  }
-	  };
-	  
-	  ActionListener chickenBrothClick = new ActionListener(){
-		  public void actionPerformed (ActionEvent e) {
-			  balanceField.setText("1");
-		  }
-	  };
 	  WindowListener windowListener = new WindowAdapter(){
 		
 		@Override
@@ -139,15 +99,15 @@ public class TheView extends JFrame implements Observer {
 			}
 		}
 		
-		drinkSelection.setLayout(new GridLayout(drinks.length, 3));
+		drinkSelection.setLayout(new GridLayout(drinkMenu.size(), 3));
 		balanceField.setEnabled(false);
 		outputField.setEnabled(false);
 
 		// instantiate buttons
-		buttons = new JButton[drinks.length];
-		coinButtons = new JButton[coins.length];
-		upButtons = new JButton[drinks.length];
-		downButtons = new JButton[drinks.length];
+		drinkButtons = new JButton[drinkMenu.size()];
+		coinButtons = new JButton[drinkMenu.size()];
+		upButtons = new JButton[drinkMenu.size()];
+		downButtons = new JButton[drinkMenu.size()];
 
 		outputSection.add(OUTPUT);
 		outputSection.add(outputField);
@@ -155,11 +115,11 @@ public class TheView extends JFrame implements Observer {
 		balanceSection.add(balanceField);
 
 		// implement drink buttons
-		for (int i = 0; i < drinks.length; i++) {
-			buttons[i] = new JButton(drinks[i]);
+		for (int i = 0; i < drinkMenu.size(); i++) {
+			drinkButtons[i] = new JButton(drinkMenu.get(i).getName());
 			upButtons[i] = new BasicArrowButton(BasicArrowButton.NORTH);
 			downButtons[i] = new BasicArrowButton(BasicArrowButton.SOUTH);
-			drinkSelection.add(buttons[i]);
+			drinkSelection.add(drinkButtons[i]);
 			condimentPanel.add(upButtons[i]);
 			condimentPanel.add(downButtons[i]);
 		}
@@ -170,13 +130,6 @@ public class TheView extends JFrame implements Observer {
 			  coinButtons[i] = new JButton(coins[i]);	
 			  coinSelection.add(coinButtons[i]); 
 		  }
-		  
-		  buttons[0].addActionListener(coffeeClick);
-		  buttons[1].addActionListener(decafClick);
-		  buttons[2].addActionListener(hotCocoaClick);
-	   	  buttons[3].addActionListener(teaClick);
-		  buttons[4].addActionListener(chickenBrothClick);
-
 		  
       Color WHITE = new Color(250,250,250);
       
@@ -213,6 +166,8 @@ public class TheView extends JFrame implements Observer {
 	  
 	 
 	}
+	
+	
 
 	@Override
 	public void update(String type, String string) {
