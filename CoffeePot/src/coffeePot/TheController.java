@@ -1,14 +1,13 @@
 package coffeePot;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Scanner;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.JButton;
 
@@ -17,6 +16,10 @@ public class TheController {
 	private TheView view;
 	private Dispenser dispenser;
 	private CoinSlot coinSlot;
+	
+	private int totalIncrease = 0;
+	private int totalDecrease = 0;
+	
 
 	// Attributes for creating the drinkMenu
 	private Scanner menuFile;
@@ -26,10 +29,12 @@ public class TheController {
 	public TheController(TheView view, Dispenser dispenser, CoinSlot coinSlot) {
 		// Models
 		this.dispenser = dispenser;
-		this.view = view;
-		view.setController(this);
 		this.coinSlot = coinSlot;
 
+		// View
+		this.view = view;
+		view.setController(this);
+		
 		// Importing the menu.in file
 		this.drinkMenu = new ArrayList<Drink>();
 		try {
@@ -63,17 +68,10 @@ public class TheController {
 	}
 
 	// TODO convert all these methods to action listeners????
-
-	// add coin method
+	// add coin
 	public void addCoin(int value) {
 		System.out.println("Added " + value + " cents to the machine!");
 		coinSlot.insert(value);
-	}
-
-	// get balance
-	public int getBalance() {
-		System.out.println("Current balance is " + coinSlot.getBalance());
-		return coinSlot.getBalance();
 	}
 
 	// coin return
@@ -82,33 +80,66 @@ public class TheController {
 		return coinSlot.coinReturn();
 	}
 
-	// restocks a particular condiment
-	public void restockReserve(String condiment, int amount) {
-		dispenser.setreserve(condiment, amount);
-	}
-
-	public boolean isEnough(Drink drink) {
-		return coinSlot.isEnough(drink.getPrice());
-	}
-
-	public ActionListener makeActionListener(JButton button) {
+	// drink buttons
+	public ActionListener drinkSelect(JButton button) {
 
 		ActionListener drinkPressed = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
 				String drinkName = button.getText();
-				System.out.println(drinkName);
 
-				 ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
-				 
-				 for(Drink drink: drinkMenu) { if(drink.getName() == drinkName){ ingredients =
-				 drink.getIngredients(); } }
-				 
+				for(Drink drink: drinkMenu) {
+					if(drink.getName() == drinkName) {
+						ingredients = drink.getIngredients();
+					}
+				}
 
 				view.displayIngredientsMenu(ingredients);
+				dispenser.setDrinkName(drinkName);
+
 			}
 		};
 
 		return drinkPressed;
 	}
+
+
+
+	// ingredient increase button
+	public ActionListener incrementIngredient(JButton button) {
+
+		ActionListener increasePressed = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				totalIncrease++;
+
+			}
+		};
+		
+		return increasePressed;
+	}
+		
+	// ingredient decrease button
+		public ActionListener decrementIngredient(JButton button) {
+
+			ActionListener decreasePressed = new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+
+					totalDecrease++;
+
+				}
+			};
+			
+			return decreasePressed;
+		}
+
+
+// update balance
+		public void updateBalance() {
+			view.updateBalanceView(coinSlot.getBalance());
+		}
 }
+	// submit
+
+

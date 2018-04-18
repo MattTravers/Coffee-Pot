@@ -16,4 +16,12 @@ public class Ingredient {
 	public int getAmount() {
 		return amount;
 	}
+	
+	public void increaseAmount() {
+		this.amount++;
+	}
+	
+	public void decreaseAmount() {
+		this.amount--;
+	}
 }

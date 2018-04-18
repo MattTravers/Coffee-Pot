@@ -10,14 +10,14 @@ public class Dispenser implements Subject {
 	private ArrayList<Drink> drinkMenu;
 	private ArrayList<String> reserveLabels;
 
-	public Dispenser(CoinSlot coinSlot) {
-		this.coinSlot = coinSlot;
-	}
-
 	// drink info updated with every button click the view
 	private String drinkName;
 	private int price;
 	private ArrayList<Ingredient> ingredients;
+
+	public Dispenser(CoinSlot coinSlot) {
+		this.coinSlot = coinSlot;
+	}
 
 	private int stringConverter(String name) {
 		for (int i = 0; i < reserveLabels.size(); i++) {
@@ -28,7 +28,7 @@ public class Dispenser implements Subject {
 					// indexOutOfBounds error?
 	}
 
-	// processes a drink. Removes
+	// processes a drink. Removes ingredients from reserve.
 	public void serveDrink() {
 		if (!coinSlot.isEnough(this.price)) {
 			this.outputString = "Please insert more money, " + drinkName + " costs " + price;
@@ -53,14 +53,32 @@ public class Dispenser implements Subject {
 			reserve[stringConverter(i.getName())] -= i.getAmount();
 		}
 	}
-	
-	public int getReserve(String condiment) {
-		return reserve[stringConverter(condiment)];
 
+	public void increaseIngredient(String ingredientName) {
+		for (Ingredient i : this.ingredients) {
+			if (i.getName().equals(ingredientName)) {
+				if (i.getAmount() < reserve[stringConverter(ingredientName)]) {
+					i.increaseAmount();
+				} else {
+					this.outputString = "Not enough " + ingredientName;
+					this.notifyObservers();
+				}
+				break;
+			}
+		}
 	}
 
-	public void setreserve(String condiment, int value) {
-		this.reserve[stringConverter(condiment)] = value;
+	public void decreaseIngredient(String ingredientName) {
+		for (Ingredient i : this.ingredients) {
+			if (i.getName().equals(ingredientName)) {
+				if (i.getAmount() == 0) {
+					;
+				} else {
+					i.decreaseAmount();
+				}
+				break;
+			}
+		}
 	}
 
 	@Override
@@ -86,13 +104,20 @@ public class Dispenser implements Subject {
 	}
 
 	public void setReserveLabels(ArrayList<Drink> drinkMenu) {
+		int count = 0;
 		this.drinkMenu = drinkMenu;
 		this.reserveLabels = new ArrayList<String>();
 		for (Drink d : drinkMenu) {
 			this.reserveLabels.add(d.getName());
+			count++;
 			for (Ingredient i : d) {
 				this.reserveLabels.add(i.getName());
+				count++;
 			}
+		}
+		this.reserve = new int[count];
+		for (int i = 0; i < this.reserve.length; i++) {
+			this.reserve[i] = 25;
 		}
 	}
 }

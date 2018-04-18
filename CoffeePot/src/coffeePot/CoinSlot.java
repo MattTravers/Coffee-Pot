@@ -2,6 +2,7 @@ package coffeePot;
 
 public class CoinSlot implements Subject{
 	private Observer observer;
+	private int[] coins;
 	
 	// in cents
 	private int balance = 0;
