@@ -1,9 +1,15 @@
 package coffeePot;
 
+import java.util.ArrayList;
+
 public class Dispenser implements Subject {
 	private int reserve[] = { 10, 10, 10, 10, 10, 10, 10, 10, 10 };
 	private Observer observer;
 	private String state;
+	
+	//drink info updated with every button click the view
+	private String drinkName;
+	private ArrayList<Ingredient> ingredients;	
 
 	private int stringConverter(String name) {
 		switch (name) {
