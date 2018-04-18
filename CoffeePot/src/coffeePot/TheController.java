@@ -65,9 +65,9 @@ public class TheController {
 
 	// TODO convert all these methods to action listeners????
 	// add coin
-	public void addCoin(int value) {
+	public void addCoin(String money) {
 		System.out.println("Added " + value + " cents to the machine!");
-		coinSlot.insert(value);
+		coinSlot.insert(money);
 	}
 
 	// coin return
