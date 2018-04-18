@@ -2,18 +2,22 @@ package coffeePot;
 
 public class CoinSlot implements Subject {
 	private Observer observer;
-	private int[] coins = {1,5,10,25,100,500};
+	private int[] coins = { 1, 5, 10, 25, 100, 500 };
+	private int[] coinStock;
 	private String[] money = { "penny", "nickel", "dime", "quarter", "dollar", "five" };
+	private boolean changeAvailable;
 
 	// in cents
 	private int balance = 0;
 
 	public CoinSlot() {
-		
+		coinStock = new int[money.length];
+		for (int i = 0; i < coinStock.length; i++) {
+			coinStock[i] = 100;
+		}
 	}
 
 	public boolean isEnough(int price) {
-		// TODO Auto-generated method stub
 		return balance >= price;
 	}
 
@@ -21,6 +25,7 @@ public class CoinSlot implements Subject {
 		for (int i = 0; i < this.money.length; i++) {
 			if (this.money[i].equals(money)) {
 				balance += coins[i];
+				coinStock[i]++;
 				break;
 			}
 		}
@@ -36,10 +41,53 @@ public class CoinSlot implements Subject {
 
 	public void coinReturn() {
 		int temp = this.balance;
-		// TODO Get # for each type of coin and put in a String
-		// TODO figure out how to update Output on view
+		if (changeAvailable) {
+			//TODO do this is a super sweet swanky nice for loop
+			int num;
+			if (temp >= 500) {
+				num = temp / 500;
+				if (coinStock[5] >= num) {
+					coinStock[5] -= num;
+				}
+			}
+			if (temp >= 100) {
+				num = temp / 100;
+				if (coinStock[4] >= num) {
+					coinStock[4] -= num;
+				}
+			}
+			if (temp >= 25) {
+				num = temp / 25;
+				if (coinStock[3] >= num) {
+					coinStock[3] -= num;
+				}
+			}
+			if (temp >= 10) {
+				num = temp / 10;
+				if (coinStock[2] >= num) {
+					coinStock[2] -= num;
+				}
+			}
+			if (temp >= 5) {
+				num = temp / 5;
+				if (coinStock[1] >= num) {
+					coinStock[1] -= num;
+				}
+			}
+			if (temp > 0) {
+				coinStock[0] -= temp;
+			}
+		}
 		this.balance = 0;
 		this.notifyObservers();
+
+		// check if we can give change still if we can't send text to output saying
+		// "change not provided"
+		if (coinStock[0] < 5 || coinStock[1] < 2 || coinStock[2] < 3 || coinStock[3] < 4 || coinStock[4] < 5) {
+			changeAvailable = false;
+		} else {
+			changeAvailable = true;
+		}
 	}
 
 	// getters and setters
@@ -58,7 +106,7 @@ public class CoinSlot implements Subject {
 
 	@Override
 	public void notifyObservers() {
-		String string = String.format("$%d.%02d", this.getBalance() / 100,this.getBalance() % 100);
+		String string = String.format("$%d.%02d", this.getBalance() / 100, this.getBalance() % 100);
 		this.observer.update("Balance", string);
 	}
 }
