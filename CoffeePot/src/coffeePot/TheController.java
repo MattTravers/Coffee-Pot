@@ -82,11 +82,6 @@ public class TheController {
 		return coinSlot.coinReturn();
 	}
 
-	// restocks a particular condiment
-	public void restockReserve(String condiment, int amount) {
-		dispenser.setreserve(condiment, amount);
-	}
-
 	public boolean isEnough(Drink drink) {
 		return coinSlot.isEnough(drink.getPrice());
 	}
