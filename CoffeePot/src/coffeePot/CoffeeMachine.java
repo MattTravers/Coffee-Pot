@@ -1,7 +1,7 @@
 package coffeePot;
 
 public class CoffeeMachine {
-	public void main(String args[]) {
+	public static void main(String args[]) {
 		// view class
 		TheView theView = new TheView();
 		

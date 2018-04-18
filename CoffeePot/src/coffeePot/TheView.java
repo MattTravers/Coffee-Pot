@@ -32,13 +32,8 @@ public class TheView extends JFrame implements Observer {
 	//non-view attributes
 	private TheController controller;
 	private ArrayList<Drink> drinkMenu;
-	public Drink tea = new Drink("tea", 111);
 
-	public Drink lol = new Drink("lol", 3);
-	public Drink yo = new Drink("yo", 11231);
-	public Drink ma = new Drink("ma", 11231);
-	public Drink ho = new Drink("ho", 11331);
-	///
+	
 	private JButton drinkButtons[];
 	private JButton coinButtons[];
 	private JButton ingriedentButtons[];
@@ -77,37 +72,38 @@ public class TheView extends JFrame implements Observer {
 	// Listener Events
 
 	public TheView() {
-		drinkMenu = new ArrayList<Drink>();
-		tea.addIngredient("moar",10000);
 		
-		drinkMenu.add(tea);
-		drinkMenu.add(lol);
-		drinkMenu.add(yo);
-		drinkMenu.add(ma);
-		drinkMenu.add(ho);
+	}
+	
+	public void displayIngredientsMenu(ArrayList<Ingredient> ingredients){
 		
-		/*
-		//getting the drink menu from the text file
-		this.drinkMenu = new ArrayList<Drink>();
-		try {
-			menuFile = new Scanner(new File("menu.in"));
-		} catch (Exception e) {
-			System.out.println("Missing menu file");
-			System.exit(1);
+		ingriedentButtons = new JButton[ingredients.size()];
+		
+		
+		for(int i = 0 ; i < ingredients.size(); i++){
+			ingriedentButtons[i] = new JButton(ingredients.get(i).getName());
+			ingredientSelection.add(ingriedentButtons[i]);
 		}
 		
-		while (menuFile.hasNextLine()) {
-			String drinkName = menuFile.nextLine();
-			int drinkPrice = Integer.parseInt(menuFile.nextLine());
-			Drink drink = new Drink(drinkName,drinkPrice);
-			String ingredient = menuFile.nextLine();
-			while(!ingredient.equals("endDrink")) {
-				drink.addIngredient(ingredient,0);
-				ingredient = menuFile.nextLine();
-			}
-		}
-		*/
+		  orderMenu.add(ingredientSelection,BorderLayout.CENTER);
 		
+	}
+	
+	//test
+	public void display(String str){
+		
+		JLabel name = new JLabel("You Pressed "+ str);
+		
+		System.out.println("it twerked");
+		  //orderMenu.removeAll(); 
+
+		  //orderMenu.add(name,BorderLayout.CENTER);
+		
+	}
+	
+	public void run() {
+		
+
 		drinkSelection.setLayout(new GridLayout(drinkMenu.size(), 3));
 		balanceField.setEnabled(false);
 		outputField.setEnabled(false);
@@ -177,43 +173,6 @@ public class TheView extends JFrame implements Observer {
 	  orderWindow.setVisible( true );
 	  
 	 
-	}
-	
-	public void displayIngredientsMenu(ArrayList<Ingredient> ingredients){
-		
-		ingriedentButtons = new JButton[ingredients.size()];
-		
-		
-		for(int i = 0 ; i < ingredients.size(); i++){
-			ingriedentButtons[i] = new JButton(ingredients.get(i).getName());
-			ingredientSelection.add(ingriedentButtons[i]);
-		}
-		
-		  orderMenu.add(ingredientSelection,BorderLayout.CENTER);
-		
-	}
-	
-	//test
-	public void display(String str){
-		
-		JLabel name = new JLabel("You Pressed "+ str);
-		
-		System.out.println("it twerked");
-		  //orderMenu.removeAll(); 
-
-		  //orderMenu.add(name,BorderLayout.CENTER);
-		
-	}
-	
-	public void makeButtons() {
-		
-		String coins[] = { "penny", "nickel", "dime", "quarter" };
-
-		JButton drinkButtons[];
-		JButton coinButtons[];
-		JButton upButtons[];
-		JButton downButtons[];
-		
 
 	}
 	
@@ -234,6 +193,10 @@ public class TheView extends JFrame implements Observer {
 
 	public void setDrinkMenu(ArrayList<Drink> drinkMenu) {
 		this.drinkMenu = drinkMenu;
+	}
+	
+	public void setController(TheController controller) {
+		this.controller = controller;
 	}
 
 }

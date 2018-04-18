@@ -27,6 +27,7 @@ public class TheController {
 		// Models
 		this.dispenser = dispenser;
 		this.view = view;
+		view.setController(this);
 		this.coinSlot = coinSlot;
 
 		// Importing the menu.in file
