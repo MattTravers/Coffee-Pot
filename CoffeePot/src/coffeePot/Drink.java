@@ -12,7 +12,6 @@ public class Drink implements Iterable<Ingredient> {
 		this.name = name;
 		this.price = price;
 		this.ingredients = new ArrayList<Ingredient>();
-		this.ingredients.add(new Ingredient(name,1));
 	}
 
 	public void addIngredient(String ingredient, int amount) {
@@ -25,6 +24,10 @@ public class Drink implements Iterable<Ingredient> {
 
 	public int getPrice() {
 		return price;
+	}
+	
+	public ArrayList<Ingredient> getIngredients(){
+		return this.ingredients;
 	}
 
 	@Override

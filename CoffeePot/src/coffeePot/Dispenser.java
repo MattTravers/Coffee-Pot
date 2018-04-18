@@ -3,52 +3,53 @@ package coffeePot;
 import java.util.ArrayList;
 
 public class Dispenser implements Subject {
-	private int reserve[] = { 10, 10, 10, 10, 10, 10, 10, 10, 10 };
+	private CoinSlot coinSlot;
+	private int reserve[];
 	private Observer observer;
-	private String state;
-	
-	//drink info updated with every button click the view
+	private String outputString;
+	private ArrayList<Drink> drinkMenu;
+	private ArrayList<String> reserveLabels;
+
+	public Dispenser(CoinSlot coinSlot) {
+		this.coinSlot = coinSlot;
+	}
+
+	// drink info updated with every button click the view
 	private String drinkName;
-	private ArrayList<Ingredient> ingredients;	
+	private int price;
+	private ArrayList<Ingredient> ingredients;
 
 	private int stringConverter(String name) {
-		switch (name) {
-		case "Coffee":
-			return 0;
-		case "Tea":
-			return 1;
-		case "Decaf":
-			return 2;
-		case "Sugar":
-			return 3;
-		case "Cream":
-			return 4;
-		case "Lemon":
-			return 5;
-		case "ChickenBroth":
-			return 6;
-		case "Hot Cocoa":
-			return 7;
-		case "Marshmellows":
-			return 8;
+		for (int i = 0; i < reserveLabels.size(); i++) {
+			if (reserveLabels.get(i).equals(name))
+				return i;
 		}
-		return -1;
+		return -1; // TODO should this throw an specific exception instead of creating and
+					// indexOutOfBounds error?
 	}
 
-	public boolean check(Drink drink) {
-		for (Ingredient i : drink) {
-			String name = i.getName();
-			if (reserve[stringConverter(name)] < i.getAmount()) {
-				//TO DO: change to update view instead of output to console
-				System.out.println("Error: not enough " + name); 
-				return false;
+	// processes a drink. Removes
+	public void serveDrink() {
+		if (!coinSlot.isEnough(this.price)) {
+			this.outputString = "Please insert more money, " + drinkName + " costs " + price;
+			this.notifyObservers();
+		} else {
+			this.changeReserve(ingredients);
+			coinSlot.deduct(this.price);
+			this.outputString = "Coffee Machine dispenses " + this.drinkName;
+			for (Ingredient i : this.ingredients) {
+				this.outputString += ", " + i.getAmount() + " " + i.getName();
 			}
+			this.notifyObservers();
 		}
-		return true;
 	}
 
-	public void changeReserve(Drink drink) {
-		for (Ingredient i : drink) {
+	public void changeReserve(ArrayList<Ingredient> ingredients) {
+		// deduct drink from reserve
+		reserve[stringConverter(this.drinkName)]--;
+
+		// deduct ingredients from reserve
+		for (Ingredient i : ingredients) {
 			reserve[stringConverter(i.getName())] -= i.getAmount();
 		}
 	}
@@ -69,6 +70,29 @@ public class Dispenser implements Subject {
 
 	@Override
 	public void notifyObservers() {
-		this.observer.update("Output", this.state);
+		this.observer.update("Output", this.outputString);
+	}
+
+	// sets drink name. Also updates price by referencing the drinkMenu
+	public void setDrinkName(String drinkName) {
+		this.drinkName = drinkName;
+		for (Drink d : drinkMenu) {
+			if (d.getName().equals(drinkName)) {
+				this.price = d.getPrice();
+				this.ingredients = d.getIngredients();
+				break;
+			}
+		}
+	}
+
+	public void setReserveLabels(ArrayList<Drink> drinkMenu) {
+		this.drinkMenu = drinkMenu;
+		this.reserveLabels = new ArrayList<String>();
+		for (Drink d : drinkMenu) {
+			this.reserveLabels.add(d.getName());
+			for (Ingredient i : d) {
+				this.reserveLabels.add(i.getName());
+			}
+		}
 	}
 }

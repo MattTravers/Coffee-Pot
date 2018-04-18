@@ -30,9 +30,7 @@ import javax.swing.JTextField;
 public class TheView extends JFrame implements Observer {
 	//non-view attributes
 	private TheController controller;
-	private Scanner menuFile;
 	private ArrayList<Drink> drinkMenu;
-	
 	private JButton buttons[];
 	
 	private JButton coinButtons[];
@@ -116,29 +114,7 @@ public class TheView extends JFrame implements Observer {
 		}
 	  };
 
-	public TheView(TheController theController) {
-		this.controller = theController;
-		
-		//getting the drink menu from the text file
-		this.drinkMenu = new ArrayList<Drink>();
-		try {
-			menuFile = new Scanner(new File("menu.in"));
-		} catch (Exception e) {
-			System.out.println("Missing menu file");
-			System.exit(1);
-		}
-		
-		while (menuFile.hasNextLine()) {
-			String drinkName = menuFile.nextLine();
-			int drinkPrice = Integer.parseInt(menuFile.nextLine());
-			Drink drink = new Drink(drinkName,drinkPrice);
-			String ingredient = menuFile.nextLine();
-			while(!ingredient.equals("endDrink")) {
-				drink.addIngredient(ingredient,0);
-				ingredient = menuFile.nextLine();
-			}
-		}
-		
+	public TheView() {
 		drinkSelection.setLayout(new GridLayout(drinks.length, 3));
 		balanceField.setEnabled(false);
 		outputField.setEnabled(false);
@@ -223,8 +199,12 @@ public class TheView extends JFrame implements Observer {
 		}
 	}
 
-	public static void main(String[] args) {
-		TheView view = new TheView(new TheController());
+//	public static void main(String[] args) {
+//		TheView view = new TheView();
+//	}
+
+	public void setDrinkMenu(ArrayList<Drink> drinkMenu) {
+		this.drinkMenu = drinkMenu;
 	}
 
 }
