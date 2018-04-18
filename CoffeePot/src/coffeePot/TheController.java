@@ -16,11 +16,10 @@ public class TheController {
 	private TheView view;
 	private Dispenser dispenser;
 	private CoinSlot coinSlot;
-	
-	//Attributes for ActionListeners
+
+	// Attributes for ActionListeners
 	private ArrayList<Ingredient> ingredientChanges = new ArrayList<Ingredient>();
 
-	
 	// Attributes for creating the drinkMenu
 	private Scanner menuFile;
 	private ArrayList<Drink> drinkMenu;
@@ -34,7 +33,7 @@ public class TheController {
 		// View
 		this.view = view;
 		view.setController(this);
-		
+
 		// Importing the menu.in file
 		this.drinkMenu = new ArrayList<Drink>();
 		try {
@@ -67,19 +66,6 @@ public class TheController {
 		view.setDrinkMenu(drinkMenu);
 	}
 
-	// TODO convert all these methods to action listeners????
-	// add coin
-	public void addCoin(String money) {
-		//System.out.println("Added " + value + " cents to the machine!");
-		coinSlot.insert(money);
-	}
-
-	// coin return
-	public int coinReturn() {
-		System.out.println("Returned " + coinSlot.getBalance());
-		return coinSlot.coinReturn();
-	}
-
 	// drink buttons
 	public ActionListener drinkSelect(JButton button) {
 
@@ -89,8 +75,8 @@ public class TheController {
 				ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
 				String drinkName = button.getText();
 
-				for(Drink drink: drinkMenu) {
-					if(drink.getName() == drinkName) {
+				for (Drink drink : drinkMenu) {
+					if (drink.getName() == drinkName) {
 						ingredients = drink.getIngredients();
 					}
 				}
@@ -104,107 +90,91 @@ public class TheController {
 		return drinkPressed;
 	}
 
-
-
 	// ingredient increase button
 	public ActionListener incrementIngredient(JButton button) {
 
 		ActionListener increasePressed = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					
-					boolean inList = false;
-					
-					for(Ingredient i: ingredientChanges) {
-						if(button.getText().substring(0) == i.getName()) {
-							i.increaseAmount();
-							view.updateCondimentCount(i);
-							inList = true;
-						}
-					}
-					
-					if(!inList){
-						Ingredient i = new Ingredient(button.getText().substring(0),1);
-						ingredientChanges.add(i);
+
+				boolean inList = false;
+
+				for (Ingredient i : ingredientChanges) {
+					if (button.getText().substring(0) == i.getName()) {
+						i.increaseAmount();
 						view.updateCondimentCount(i);
+						inList = true;
 					}
+				}
+
+				if (!inList) {
+					Ingredient i = new Ingredient(button.getText().substring(0), 1);
+					ingredientChanges.add(i);
+					view.updateCondimentCount(i);
+				}
 
 			}
 		};
-		
+
 		return increasePressed;
 	}
-		
+
 	// ingredient decrease button
-		public ActionListener decrementIngredient(JButton button) {
+	public ActionListener decrementIngredient(JButton button) {
 
-			ActionListener decreasePressed = new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					
-					boolean inList = false;
-					
-					for(Ingredient i: ingredientChanges) {
-						if(button.getText().substring(0) == i.getName()) {
-							i.decreaseAmount();
-							view.updateCondimentCount(i);
-							inList = true;
-						}
+		ActionListener decreasePressed = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				boolean inList = false;
+
+				for (Ingredient i : ingredientChanges) {
+					if (button.getText().substring(0) == i.getName()) {
+						i.decreaseAmount();
+						view.updateCondimentCount(i);
+						inList = true;
 					}
-					
-					
-					
 				}
-			};
-			
-			return decreasePressed;
-		}
 
-		//this is the add Coin method
-		public ActionListener addBalance(JButton button) {
+			}
+		};
 
-			ActionListener addBalance = new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					
-					coinSlot.insert(button.getText());
-					updateBalance();
-					
-				}
-			};
-			
-			return addBalance;
-		}
-		
-		
-		// submit
-		public ActionListener returnBalance(JButton button) {
+		return decreasePressed;
+	}
 
-			ActionListener returnBalance = new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					coinSlot.coinReturn();
-					updateBalance();
-				}
-			};
-			
-			return returnBalance;
-		}
-		
-		
-		// submit
-		public ActionListener submit(JButton button) {
+	// this is the add Coin method
+	public ActionListener addBalance(JButton button) {
 
-			ActionListener submit = new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-				}
-			};
-			
-			return submit;
-		}
+		ActionListener addBalance = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 
+				coinSlot.insert(button.getText());
 
-		// update balance
-		public void updateBalance() {
-			view.updateBalanceView("$"+coinSlot.getBalance()/100 +"."+coinSlot.getBalance()%100);
-		}
+			}
+		};
+
+		return addBalance;
+	}
+
+	// Coin return
+	public ActionListener returnBalance(JButton button) {
+
+		ActionListener returnBalance = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				coinSlot.coinReturn();
+			}
+		};
+
+		return returnBalance;
+	}
+
+	// submit
+	public ActionListener submit(JButton button) {
+
+		ActionListener submit = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		};
+
+		return submit;
+	}
+
 }
-
-
-

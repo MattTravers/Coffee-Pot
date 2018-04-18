@@ -180,17 +180,13 @@ public class TheView extends JFrame implements Observer {
 		}
 	}
 	
-	public void updateBalanceView(String balance) {
-		balanceField.setText(balance);
-	}
-	
 	
 	
 
 	@Override
 	public void update(String type, String string) {
 		if (type.equals("Balance")) {
-			// update balance
+			balanceField.setText(string);
 		} else { //if output
 			// update Output
 		}

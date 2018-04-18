@@ -2,16 +2,14 @@ package coffeePot;
 
 public class CoinSlot implements Subject {
 	private Observer observer;
-	private int[] coins = new int[6];
-	private String[] money = { "penny", "nickle", "dime", "quarter", "dollar", "five" };
+	private int[] coins = {1,5,10,25,100,500};
+	private String[] money = { "penny", "nickel", "dime", "quarter", "dollar", "five" };
 
 	// in cents
 	private int balance = 0;
 
 	public CoinSlot() {
-		for (int i = 0; i < coins.length; i++) {
-			coins[i] = 100;
-		}
+		
 	}
 
 	public boolean isEnough(int price) {
@@ -41,6 +39,7 @@ public class CoinSlot implements Subject {
 		// TODO Get # for each type of coin and put in a String
 		// TODO figure out how to update Output on view
 		this.balance = 0;
+		this.notifyObservers();
 	}
 
 	// getters and setters
@@ -59,6 +58,7 @@ public class CoinSlot implements Subject {
 
 	@Override
 	public void notifyObservers() {
-		this.observer.update("Balance", "$" + this.getBalance() / 100 + "." + this.getBalance() % 100);
+		String string = String.format("$%d.%02d", this.getBalance() / 100,this.getBalance() % 100);
+		this.observer.update("Balance", string);
 	}
 }
