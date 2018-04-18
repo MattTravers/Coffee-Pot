@@ -1,14 +1,13 @@
 package coffeePot;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Scanner;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.JButton;
 
@@ -26,10 +25,12 @@ public class TheController {
 	public TheController(TheView view, Dispenser dispenser, CoinSlot coinSlot) {
 		// Models
 		this.dispenser = dispenser;
-		this.view = view;
-		view.setController(this);
 		this.coinSlot = coinSlot;
 
+		// View
+		this.view = view;
+		view.setController(this);
+		
 		// Importing the menu.in file
 		this.drinkMenu = new ArrayList<Drink>();
 		try {
@@ -63,17 +64,10 @@ public class TheController {
 	}
 
 	// TODO convert all these methods to action listeners????
-
-	// add coin method
+	// add coin
 	public void addCoin(int value) {
 		System.out.println("Added " + value + " cents to the machine!");
 		coinSlot.insert(value);
-	}
-
-	// get balance
-	public int getBalance() {
-		System.out.println("Current balance is " + coinSlot.getBalance());
-		return coinSlot.getBalance();
 	}
 
 	// coin return
@@ -82,10 +76,7 @@ public class TheController {
 		return coinSlot.coinReturn();
 	}
 
-	public boolean isEnough(Drink drink) {
-		return coinSlot.isEnough(drink.getPrice());
-	}
-
+	// drink buttons
 	public ActionListener makeActionListener(JButton button) {
 
 		ActionListener drinkPressed = new ActionListener() {
@@ -93,14 +84,6 @@ public class TheController {
 
 				String drinkName = button.getText();
 				System.out.println(drinkName);
-
-				// Stuff in Dispenser
-				/*
-				 * ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
-				 * 
-				 * for(Drink drink: drinkMenu) { if(drink.getName() == drinkName){ ingredients =
-				 * drink.getIngredients(); } }
-				 */
 
 				view.display(drinkName);
 				dispenser.setDrinkName(drinkName);
@@ -110,11 +93,9 @@ public class TheController {
 		return drinkPressed;
 	}
 
-	WindowListener windowListener = new WindowAdapter() {
-
-		@Override
-		public void windowClosing(WindowEvent e) {
-			System.exit(0);
-		}
-	};
+	// ingredient decrease button
+	
+	// ingredient increase button
+	
+	// submit
 }
