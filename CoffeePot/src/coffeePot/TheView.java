@@ -1,5 +1,12 @@
 package coffeePot;
 
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.event.*;
+import javax.swing.plaf.basic.BasicArrowButton;
+import javax.swing.*;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
@@ -19,6 +26,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+
 public class TheView extends JFrame implements Observer {
 	//non-view attributes
 	private TheController controller;
@@ -26,7 +34,12 @@ public class TheView extends JFrame implements Observer {
 	private ArrayList<Drink> drinkMenu;
 	
 	private JButton buttons[];
+	
 	private JButton coinButtons[];
+	private JButton upButtons[];
+	private JButton downButtons[];
+
+
 	private JFrame orderWindow = new JFrame();
 	private JFrame coinSlotWindow = new JFrame();
 
@@ -37,15 +50,24 @@ public class TheView extends JFrame implements Observer {
 	private Container orderMenu;
 	private JPanel coinSelection = new JPanel();
 	private JPanel drinkSelection = new JPanel();
+	
 	private JPanel outputSection = new JPanel();
 	private JPanel balanceSection = new JPanel();
+	private JPanel buttonPanel = new JPanel();
+	private JPanel condimentPanel = new JPanel();
+	
 	private JLabel OUTPUT = new JLabel("OUTPUT");
 	private JLabel BALANCE = new JLabel("BALANCE");
+	private JLabel Coffee = new JLabel("Coffee");
+	private JLabel Decafe = new JLabel("Decafe");
+	private JLabel Tea = new JLabel("Tea");
+	private JLabel HotCocoa = new JLabel("HotCocoa");
+	private JLabel ChickenBroth = new JLabel("ChickenBroth");
+	
 	private JTextField outputField = new JTextField("", 20);
 	private JTextField balanceField = new JTextField("", 20);
-	private JPanel buttonPanel = new JPanel();
+	
 	private String coins[] = { "penny", "nickel", "dime", "quarter" };
-
 	private String drinks[] = {"Coffee", "Decafe","HotCocoa","Tea","ChickenBroth"};
 	
 	// Listener Events
@@ -55,7 +77,35 @@ public class TheView extends JFrame implements Observer {
 		  }
 	  };
 	  
+	  ActionListener coffeeClick = new ActionListener(){
+		  public void actionPerformed (ActionEvent e) {
+			  balanceField.setText("1");
+		  }
+	  };
 	  
+	  ActionListener hotCocoaClick = new ActionListener(){
+		  public void actionPerformed (ActionEvent e) {
+			  balanceField.setText("1");
+		  }
+	  };
+	  
+	  ActionListener decafClick = new ActionListener(){
+		  public void actionPerformed (ActionEvent e) {
+			  balanceField.setText("1");
+		  }
+	  };
+	  
+	  ActionListener teaClick = new ActionListener(){
+		  public void actionPerformed (ActionEvent e) {
+			  balanceField.setText("1");
+		  }
+	  };
+	  
+	  ActionListener chickenBrothClick = new ActionListener(){
+		  public void actionPerformed (ActionEvent e) {
+			  balanceField.setText("1");
+		  }
+	  };
 	  WindowListener windowListener = new WindowAdapter(){
 		
 		@Override
@@ -93,8 +143,11 @@ public class TheView extends JFrame implements Observer {
 		balanceField.setEnabled(false);
 		outputField.setEnabled(false);
 
+		// instantiate buttons
 		buttons = new JButton[drinks.length];
 		coinButtons = new JButton[coins.length];
+		upButtons = new JButton[drinks.length];
+		downButtons = new JButton[drinks.length];
 
 		outputSection.add(OUTPUT);
 		outputSection.add(outputField);
@@ -104,22 +157,27 @@ public class TheView extends JFrame implements Observer {
 		// implement drink buttons
 		for (int i = 0; i < drinks.length; i++) {
 			buttons[i] = new JButton(drinks[i]);
+			upButtons[i] = new BasicArrowButton(BasicArrowButton.NORTH);
+			downButtons[i] = new BasicArrowButton(BasicArrowButton.SOUTH);
 			drinkSelection.add(buttons[i]);
-
+			condimentPanel.add(upButtons[i]);
+			condimentPanel.add(downButtons[i]);
 		}
 
 		// implement coin buttons
 
 		  for(int i = 0; i < coins.length; i++) {
 			  coinButtons[i] = new JButton(coins[i]);	
-			  
-			  if(i==0) {
-				  coinButtons[i].addActionListener(listener);
-			  }
-			  
-			  coinSelection.add(coinButtons[i]);
-			  
+			  coinSelection.add(coinButtons[i]); 
 		  }
+		  
+		  buttons[0].addActionListener(coffeeClick);
+		  buttons[1].addActionListener(decafClick);
+		  buttons[2].addActionListener(hotCocoaClick);
+	   	  buttons[3].addActionListener(teaClick);
+		  buttons[4].addActionListener(chickenBrothClick);
+
+		  
       Color WHITE = new Color(250,250,250);
       
       coinSlot = coinSlotWindow.getContentPane();
