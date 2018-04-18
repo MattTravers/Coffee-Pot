@@ -46,7 +46,7 @@ public class TheView extends JFrame implements Observer {
 	
 	private JTextField outputField = new JTextField("", 20);
 	private JTextField balanceField = new JTextField("", 20);
-	private JTextField numIngr[];
+	private JTextField numIngr[] = {};
 	
 	private String coins[] = { "penny", "nickel", "dime", "quarter" };
 	
@@ -63,53 +63,6 @@ public class TheView extends JFrame implements Observer {
 	
 	//update balance view//
 	
-	public void updateBalanceView(int cents) {
-		BALANCE.setText(""+cents);
-	}
-	
-	
-	//Ingredients Mode///
-	public void displayIngredientsMenu(ArrayList<Ingredient> ingredients){
-		
-		JButton ingriedentPlusButtons[];
-		JButton ingriedentMinusButtons[];
-		JButton submit = new JButton("SUBMIT");
-		
-		JFrame ingredientsWindow = new JFrame();
-
-		JPanel ingredientSelection = new JPanel();
-		
-		
-		ingriedentPlusButtons = new JButton[ingredients.size()];
-		ingriedentMinusButtons = new JButton[ingredients.size()];
-		numIngr = new JTextField[ingredients.size()];
-
-		
-		for(int i = 0 ; i < ingredients.size(); i++){
-			ingriedentPlusButtons[i] = new JButton("+" + ingredients.get(i).getName() + "+");
-			ingriedentMinusButtons[i] = new JButton("-" + ingredients.get(i).getName() + "-");
-			numIngr[i] = new JTextField("", 5);
-			numIngr[i].setEnabled(false);
-			ingredientSelection.add(ingriedentPlusButtons[i]);
-			ingredientSelection.add(ingriedentMinusButtons[i]);
-			ingredientSelection.add(numIngr[i]);
-		}
-		
-		ingredientSelection.add(submit);
-		
-		ingredientSelection.setLayout(new GridLayout(7, 1));
-		
-		ingrList = ingredientsWindow.getContentPane();
-		ingrList.setLayout( new FlowLayout() );
-		ingredientsWindow.setTitle("Ingredient Selection");
-		ingredientsWindow.setSize( 180, 300 );
-		ingredientsWindow.setLocation( 500, 200 );
-		  
-		ingrList.add(ingredientSelection);
-
-		
-		ingredientsWindow.setVisible( true );
-	}
 	
 	
 	///MAIN INSTANTIATING RUN///
@@ -126,18 +79,19 @@ public class TheView extends JFrame implements Observer {
 		// implement drink buttons
 		for (int i = 0; i < drinkMenu.size(); i++) {
 			drinkButtons[i] = new JButton(drinkMenu.get(i).getName());
-			
 			drinkButtons[i].addActionListener(controller.drinkSelect(drinkButtons[i]));
-			
 			drinkSelection.add(drinkButtons[i]);
 		}
 
 		// implement coin buttons
 
 		  for(int i = 0; i < coins.length; i++) {
-			  coinButtons[i] = new JButton(coins[i]);	
+			  coinButtons[i] = new JButton(coins[i]);
+			  coinButtons[i].addActionListener(controller.addBalance(coinButtons[i]));
 			  coinSelection.add(coinButtons[i]); 
 		  }
+		  
+		  returnCoin.addActionListener(controller.returnBalance(returnCoin));
 		  coinSelection.add(returnCoin);
       
 	  outputSection.add(OUTPUT);
@@ -173,6 +127,64 @@ public class TheView extends JFrame implements Observer {
 	  orderWindow.setVisible( true );
 	}
 	
+	//Ingredients Mode///
+	public void displayIngredientsMenu(ArrayList<Ingredient> ingredients){
+		
+		JButton ingriedentPlusButtons[];
+		JButton ingriedentMinusButtons[];
+		JButton submit = new JButton("SUBMIT");
+		
+		JFrame ingredientsWindow = new JFrame();
+
+		JPanel ingredientSelection = new JPanel();
+		
+		
+		ingriedentPlusButtons = new JButton[ingredients.size()];
+		ingriedentMinusButtons = new JButton[ingredients.size()];
+		numIngr = new JTextField[ingredients.size()];
+
+		
+		for(int i = 0 ; i < ingredients.size(); i++){
+			ingriedentPlusButtons[i] = new JButton("+" + ingredients.get(i).getName());
+			ingriedentMinusButtons[i] = new JButton("-" + ingredients.get(i).getName());
+			numIngr[i] = new JTextField(ingredients.get(i).getName()+": ", 5);
+			numIngr[i].setEnabled(false);
+			ingredientSelection.add(ingriedentPlusButtons[i]);
+			ingredientSelection.add(ingriedentMinusButtons[i]);
+			ingredientSelection.add(numIngr[i]);
+		}
+		
+		ingredientSelection.add(submit);
+		
+		ingredientSelection.setLayout(new GridLayout(7, 1));
+		
+		ingrList = ingredientsWindow.getContentPane();
+		ingrList.setLayout( new FlowLayout() );
+		ingredientsWindow.setTitle("Ingredient Selection");
+		ingredientsWindow.setSize( 180, 400 );
+		ingredientsWindow.setLocation( 500, 200 );
+		  
+		ingrList.add(ingredientSelection);
+
+		
+		ingredientsWindow.setVisible( true );
+	}
+	
+	// Update Views
+	public void updateCondimentCount(Ingredient ingredient) {
+		
+		for(JTextField t: numIngr) {
+			if(t.getText() == ingredient.getName() + ": ") {
+				t.setText(ingredient.getName() + ": "+ingredient.getAmount());
+			}
+		}
+	}
+	
+	public void updateBalanceView(String balance) {
+		balanceField.setText(balance);
+	}
+	
+	
 	
 
 	@Override
@@ -184,9 +196,6 @@ public class TheView extends JFrame implements Observer {
 		}
 	}
 
-//	public static void main(String[] args) {
-//		TheView view = new TheView();
-//	}
 
 	public void setDrinkMenu(ArrayList<Drink> drinkMenu) {
 		this.drinkMenu = drinkMenu;

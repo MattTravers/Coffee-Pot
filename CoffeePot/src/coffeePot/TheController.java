@@ -17,10 +17,10 @@ public class TheController {
 	private Dispenser dispenser;
 	private CoinSlot coinSlot;
 	
-	private int totalIncrease = 0;
-	private int totalDecrease = 0;
-	
+	//Attributes for ActionListeners
+	private ArrayList<Ingredient> ingredientChanges = new ArrayList<Ingredient>();
 
+	
 	// Attributes for creating the drinkMenu
 	private Scanner menuFile;
 	private ArrayList<Drink> drinkMenu;
@@ -111,8 +111,22 @@ public class TheController {
 
 		ActionListener increasePressed = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				totalIncrease++;
+					
+					boolean inList = false;
+					
+					for(Ingredient i: ingredientChanges) {
+						if(button.getText().substring(0) == i.getName()) {
+							i.increaseAmount();
+							view.updateCondimentCount(i);
+							inList = true;
+						}
+					}
+					
+					if(!inList){
+						Ingredient i = new Ingredient(button.getText().substring(0),1);
+						ingredientChanges.add(i);
+						view.updateCondimentCount(i);
+					}
 
 			}
 		};
@@ -125,21 +139,81 @@ public class TheController {
 
 			ActionListener decreasePressed = new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-
-					totalDecrease++;
-
+					
+					boolean inList = false;
+					
+					for(Ingredient i: ingredientChanges) {
+						if(button.getText().substring(0) == i.getName()) {
+							i.decreaseAmount();
+							view.updateCondimentCount(i);
+							inList = true;
+						}
+					}
+					
+					
+					
 				}
 			};
 			
 			return decreasePressed;
 		}
 
+		
+		public ActionListener addBalance(JButton button) {
 
-// update balance
+			ActionListener addBalance = new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+					if(button.getText() == "penny")
+						coinSlot.insert(1);
+					else if(button.getText() == "nickel")
+						coinSlot.insert(5);
+					else if(button.getText() == "dime")
+						coinSlot.insert(10);
+					else if(button.getText() == "quarter")
+						coinSlot.insert(25);
+
+			
+					updateBalance();
+					
+				}
+			};
+			
+			return addBalance;
+		}
+		
+		
+		// submit
+		public ActionListener returnBalance(JButton button) {
+
+			ActionListener returnBalance = new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					coinSlot.coinReturn();
+					updateBalance();
+				}
+			};
+			
+			return returnBalance;
+		}
+		
+		
+		// submit
+		public ActionListener submit(JButton button) {
+
+			ActionListener submit = new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			};
+			
+			return submit;
+		}
+
+
+		// update balance
 		public void updateBalance() {
-			view.updateBalanceView(coinSlot.getBalance());
+			view.updateBalanceView("$"+coinSlot.getBalance()/100 +"."+coinSlot.getBalance()%100);
 		}
 }
-	// submit
+
 
 
