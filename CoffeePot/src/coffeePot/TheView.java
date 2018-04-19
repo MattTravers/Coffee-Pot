@@ -27,7 +27,7 @@ public class TheView extends JFrame implements Observer {
 	
 	private JFrame orderWindow = new JFrame();
 	private JFrame coinSlotWindow = new JFrame();
-
+	JFrame ingredientsWindow;
 
 	private Container coinSlot;
 	private Container orderMenu;
@@ -44,7 +44,7 @@ public class TheView extends JFrame implements Observer {
 	private JLabel BALANCE = new JLabel("BALANCE");
 	
 	
-	private JTextField outputField = new JTextField("", 20);
+	private JTextField outputField = new JTextField("", 30);
 	private JTextField balanceField = new JTextField("", 20);
 	private JTextField numIngr[] = {};
 	
@@ -136,7 +136,7 @@ public class TheView extends JFrame implements Observer {
 		
 		submit.addActionListener(controller.submit(submit));
 		
-		JFrame ingredientsWindow = new JFrame();
+		ingredientsWindow = new JFrame();
 
 		JPanel ingredientSelection = new JPanel();
 		
@@ -184,6 +184,10 @@ public class TheView extends JFrame implements Observer {
 		} else { //if output
 			this.updateOutput(string);
 		}
+	}
+	
+	public void closeIngredientsWindow() {
+		ingredientsWindow.dispose();
 	}
 
 
