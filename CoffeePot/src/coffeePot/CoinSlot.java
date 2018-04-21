@@ -6,6 +6,7 @@ public class CoinSlot implements Subject {
 	private int[] coinStock;
 	private String[] money = { "penny", "nickel", "dime", "quarter", "dollar", "five" };
 	private boolean changeAvailable;
+	private String outputString;
 
 	// in cents
 	private int balance = 0;
@@ -106,7 +107,11 @@ public class CoinSlot implements Subject {
 
 	@Override
 	public void notifyObservers() {
-		String string = String.format("$%d.%02d", this.getBalance() / 100, this.getBalance() % 100);
-		this.observer.update("Balance", string);
+		this.outputString = String.format("$%d.%02d", this.getBalance() / 100, this.getBalance() % 100);
+		this.observer.update("Balance", this.outputString);
+	}
+
+	public String getOutput() {
+		return this.outputString;
 	}
 }
