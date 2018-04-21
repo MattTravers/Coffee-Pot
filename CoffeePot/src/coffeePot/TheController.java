@@ -176,6 +176,7 @@ public class TheController {
 		ActionListener submit = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispenser.serveDrink();
+				ingredientChanges.clear();
 				view.makeDrinksMenu();
 			}
 		};
