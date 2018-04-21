@@ -81,7 +81,7 @@ public class TheController {
 					}
 				}
 
-				view.displayIngredientsMenu(ingredients);
+				view.makeIngredientsMenu(ingredients);
 				dispenser.setDrinkName(drinkName);
 
 			}
@@ -96,10 +96,12 @@ public class TheController {
 		ActionListener increasePressed = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				String name = button.getText().substring(1, button.getText().length()-1);
+				
 				boolean inList = false;
 
 				for (Ingredient i : ingredientChanges) {
-					if (button.getText() == i.getName()) {
+					if (name.equals(i.getName())) {
 						i.increaseAmount();
 						view.updateOutput("Amount of " +i.getName() + ": "+ i.getAmount() );
 						inList = true;
@@ -107,7 +109,7 @@ public class TheController {
 				}
 
 				if (!inList) {
-					Ingredient i = new Ingredient(button.getText(), 1);
+					Ingredient i = new Ingredient(name, 1);
 					ingredientChanges.add(i);
 					view.updateOutput("Amount of " +i.getName() + ": "+ i.getAmount() );
 				}
@@ -124,11 +126,13 @@ public class TheController {
 
 		ActionListener decreasePressed = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				String name = button.getText().substring(1, button.getText().length()-1);
 
 				boolean inList = false;
 
 				for (Ingredient i : ingredientChanges) {
-					if (button.getText() == i.getName()) {
+					if (name.equals(i.getName())) {
 						i.decreaseAmount();
 						view.updateOutput("Amount of " +i.getName() + ": "+ i.getAmount() );
 						inList = true;
@@ -175,11 +179,24 @@ public class TheController {
 		ActionListener submit = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispenser.serveDrink();
-				view.closeIngredientsWindow();
+				view.makeDrinksMenu();
 			}
 		};
 
 		return submit;
+	}
+	
+	public ActionListener cancel(JButton button) {
+
+		ActionListener cancel = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ingredientChanges.clear();
+				view.updateOutput("");
+				view.makeDrinksMenu();
+			}
+		};
+
+		return cancel;
 	}
 
 }

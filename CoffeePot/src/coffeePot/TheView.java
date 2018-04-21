@@ -1,8 +1,10 @@
 package coffeePot;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -15,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 
+
 public class TheView extends JFrame implements Observer {
 	//non-view attributes
 	private TheController controller;
@@ -24,6 +27,8 @@ public class TheView extends JFrame implements Observer {
 	private JButton drinkButtons[];
 	private JButton coinButtons[];
 	private JButton returnCoin = new JButton("RETURN");
+	private JButton cancel = new JButton("CANCEL");
+
 	
 	private JFrame orderWindow = new JFrame();
 	private JFrame coinSlotWindow = new JFrame();
@@ -38,15 +43,18 @@ public class TheView extends JFrame implements Observer {
 	private JPanel drinkSelection = new JPanel();
 	private JPanel outputSection = new JPanel();
 	private JPanel balanceSection = new JPanel();
+	private JPanel ingredientSelection = new JPanel();
+
 
 	
 	private JLabel OUTPUT = new JLabel("OUTPUT");
 	private JLabel BALANCE = new JLabel("BALANCE");
-	
+	private JLabel COINSLOT = new JLabel("   COIN SLOT");
+
+
 	
 	private JTextField outputField = new JTextField("", 30);
 	private JTextField balanceField = new JTextField("", 20);
-	private JTextField numIngr[] = {};
 	
 	private String coins[] = { "penny", "nickel", "dime", "quarter" };
 	
@@ -61,30 +69,31 @@ public class TheView extends JFrame implements Observer {
 
 	public TheView() {}
 	
-	//update balance view//
-	
 	
 	
 	///MAIN INSTANTIATING RUN///
 	public void run() {
 		drinkSelection.setLayout(new GridLayout(drinkMenu.size(), 3));
+
 		balanceField.setEnabled(false);
 		outputField.setEnabled(false);
 
-		drinkButtons = new JButton[drinkMenu.size()];
+		//drinkButtons = new JButton[drinkMenu.size()];
 		coinButtons = new JButton[drinkMenu.size()];
 
 
-
+/*
 		// implement drink buttons
 		for (int i = 0; i < drinkMenu.size(); i++) {
 			drinkButtons[i] = new JButton(drinkMenu.get(i).getName());
 			drinkButtons[i].addActionListener(controller.drinkSelect(drinkButtons[i]));
 			drinkSelection.add(drinkButtons[i]);
-		}
+		}*/
 
 		// implement coin buttons
-
+		
+		coinSelection.add(COINSLOT);
+		
 		  for(int i = 0; i < coins.length; i++) {
 			  coinButtons[i] = new JButton(coins[i]);
 			  coinButtons[i].addActionListener(controller.addBalance(coinButtons[i]));
@@ -98,77 +107,114 @@ public class TheView extends JFrame implements Observer {
 	  outputSection.add(outputField);
 	  balanceSection.add(BALANCE);
 	  balanceSection.add(balanceField);
-      
-      coinSlot = coinSlotWindow.getContentPane();
-	  coinSlotWindow.setTitle("Coin Slot");
-	  coinSlotWindow.setSize( 400, 100 );
-	  coinSlotWindow.setLocation( 200, 300 );
 	  
 	  
 	  orderMenu = orderWindow.getContentPane();
-	  orderWindow.setTitle("Drink Selection");
+	  orderWindow.setTitle("Coffee Pot");
 	  orderWindow.setSize( 500, 500 );
 	  orderWindow.setLocation( 700, 200 );
 
+	  coinSelection.setLayout(new GridLayout(10,10));
 	  
+	  
+	  makeDrinksMenu();
 	  orderMenu.add(outputSection,BorderLayout.SOUTH);
-	  orderMenu.add(drinkSelection,BorderLayout.CENTER);
+	 //orderMenu.add(drinkSelection,BorderLayout.CENTER);
 	  orderMenu.add(balanceSection,BorderLayout.NORTH);
-	  
-	  coinSlot.add(coinSelection,BorderLayout.CENTER);
-
+	  orderMenu.add(coinSelection,BorderLayout.WEST);
 	  
 	  
 	  orderWindow.addWindowListener(windowListener);
-	  coinSlotWindow.addWindowListener(windowListener);
-	  
-	  
-	  coinSlotWindow.setVisible( true );
+
 	  orderWindow.setVisible( true );
 	}
 	
-	//Ingredients Mode///
-	public void displayIngredientsMenu(ArrayList<Ingredient> ingredients){
+	///Make Drinks Menu///
+	public void makeDrinksMenu(){
+		
+		orderWindow.invalidate();
+		orderWindow.validate();
+		
+		drinkButtons = new JButton[drinkMenu.size()];
+
+		for (int i = 0; i < drinkMenu.size(); i++) {
+			drinkButtons[i] = new JButton(drinkMenu.get(i).getName());
+			drinkButtons[i].addActionListener(controller.drinkSelect(drinkButtons[i]));
+			drinkSelection.add(drinkButtons[i]);
+		}
+		
+		changeToDrinks();
+
+	}
+	
+	///Make Ingredients Menu///
+	public void makeIngredientsMenu(ArrayList<Ingredient> ingredients){
+				
+		orderWindow.invalidate();
+		orderWindow.validate();
 		
 		JButton ingriedentPlusButtons[];
 		JButton ingriedentMinusButtons[];
 		JButton submit = new JButton("SUBMIT");
-		
-		submit.addActionListener(controller.submit(submit));
-		
-		ingredientsWindow = new JFrame();
+		JButton cancel = new JButton("CANCEL");
 
-		JPanel ingredientSelection = new JPanel();
-		
+		submit.addActionListener(controller.submit(submit));
+		cancel.addActionListener(controller.cancel(cancel));
+
 		
 		ingriedentPlusButtons = new JButton[ingredients.size()];
 		ingriedentMinusButtons = new JButton[ingredients.size()];
-		numIngr = new JTextField[ingredients.size()];
 
 		
 		for(int i = 0 ; i < ingredients.size(); i++){
-			ingriedentPlusButtons[i] = new JButton(ingredients.get(i).getName());
-			ingriedentMinusButtons[i] = new JButton(ingredients.get(i).getName());
+			ingriedentPlusButtons[i] = new JButton("+"+ingredients.get(i).getName()+"+");
+			ingriedentMinusButtons[i] = new JButton("-"+ingredients.get(i).getName()+"-");
 			ingriedentPlusButtons[i].addActionListener(controller.incrementIngredient(ingriedentPlusButtons[i]));
 			ingriedentMinusButtons[i].addActionListener(controller.decrementIngredient(ingriedentMinusButtons[i]));
 			ingredientSelection.add(ingriedentPlusButtons[i]);
 			ingredientSelection.add(ingriedentMinusButtons[i]);
 		}
 		
+		ingredientSelection.add(cancel);
 		ingredientSelection.add(submit);
-		
 		ingredientSelection.setLayout(new GridLayout(7, 1));
-		
-		ingrList = ingredientsWindow.getContentPane();
-		ingrList.setLayout( new FlowLayout() );
-		ingredientsWindow.setTitle("Ingredient Selection");
-		ingredientsWindow.setSize( 180, 400 );
-		ingredientsWindow.setLocation( 500, 200 );
-		  
-		ingrList.add(ingredientSelection);
 
+		changeToIngredients();
 		
-		ingredientsWindow.setVisible( true );
+	}
+	
+	
+	public void changeToDrinks() {
+		orderWindow.getContentPane().remove(ingredientSelection);
+		ingredientSelection.removeAll();
+		orderWindow.invalidate();
+		orderWindow.validate();
+		orderWindow.add(drinkSelection,BorderLayout.CENTER);
+		orderWindow.invalidate();
+		orderWindow.validate();
+		orderWindow.setSize( 501, 501 );
+
+
+
+
+
+
+	}
+	
+	
+	public void changeToIngredients() {
+		orderWindow.getContentPane().remove(drinkSelection);
+		drinkSelection.removeAll();
+		orderWindow.invalidate();
+		orderWindow.validate();
+		orderWindow.getContentPane().remove(drinkSelection);
+		orderWindow.add(ingredientSelection,BorderLayout.CENTER);
+		orderWindow.invalidate();
+		orderWindow.validate();
+		orderWindow.setSize( 500, 500 );
+
+
+
 	}
 	
 
@@ -176,7 +222,7 @@ public class TheView extends JFrame implements Observer {
 		outputField.setText(string);
 	}
 	
-
+	
 	@Override
 	public void update(String type, String string) {
 		if (type.equals("Balance")) {
@@ -185,15 +231,12 @@ public class TheView extends JFrame implements Observer {
 			this.updateOutput(string);
 		}
 	}
+
 	
-	public void closeIngredientsWindow() {
-		ingredientsWindow.dispose();
-	}
-
-
 	public void setDrinkMenu(ArrayList<Drink> drinkMenu) {
 		this.drinkMenu = drinkMenu;
 	}
+	
 	
 	public void setController(TheController controller) {
 		this.controller = controller;
