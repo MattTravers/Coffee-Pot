@@ -13,6 +13,8 @@ public class TheController {
 	private TheView view;
 	private Dispenser dispenser;
 	private CoinSlot coinSlot;
+	
+	private String currentDrink = "";
 
 	// Attributes for ActionListeners
 	private ArrayList<Ingredient> ingredientChanges = new ArrayList<Ingredient>();
@@ -68,7 +70,7 @@ public class TheController {
 
 		ActionListener drinkPressed = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				currentDrink = button.getText();
 				ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
 				String drinkName = button.getText();
 

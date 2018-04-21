@@ -27,16 +27,11 @@ public class TheView extends JFrame implements Observer {
 	private JButton drinkButtons[];
 	private JButton coinButtons[];
 	private JButton returnCoin = new JButton("RETURN");
-	private JButton cancel = new JButton("CANCEL");
 
 	
 	private JFrame orderWindow = new JFrame();
-	private JFrame coinSlotWindow = new JFrame();
-	JFrame ingredientsWindow;
 
-	private Container coinSlot;
 	private Container orderMenu;
-	private Container ingrList;
 	
 	
 	private JPanel coinSelection = new JPanel();
@@ -155,6 +150,10 @@ public class TheView extends JFrame implements Observer {
 		
 		JButton ingriedentPlusButtons[];
 		JButton ingriedentMinusButtons[];
+		JTextField ingredientAmount[];
+		JLabel ingredientName[];
+
+
 		JButton submit = new JButton("SUBMIT");
 		JButton cancel = new JButton("CANCEL");
 
@@ -164,20 +163,28 @@ public class TheView extends JFrame implements Observer {
 		
 		ingriedentPlusButtons = new JButton[ingredients.size()];
 		ingriedentMinusButtons = new JButton[ingredients.size()];
-
+		ingredientAmount = new JTextField [ingredients.size()];
+		ingredientName = new JLabel [ingredients.size()];
 		
 		for(int i = 0 ; i < ingredients.size(); i++){
+			ingredientName[i] = new JLabel(ingredients.get(i).getName());
+			ingredientAmount[i] = new JTextField("",18-ingredients.get(i).getName().length());
+			ingredientAmount[i].setEnabled(false);
 			ingriedentPlusButtons[i] = new JButton("+"+ingredients.get(i).getName()+"+");
 			ingriedentMinusButtons[i] = new JButton("-"+ingredients.get(i).getName()+"-");
 			ingriedentPlusButtons[i].addActionListener(controller.incrementIngredient(ingriedentPlusButtons[i]));
 			ingriedentMinusButtons[i].addActionListener(controller.decrementIngredient(ingriedentMinusButtons[i]));
+			ingredientSelection.add(ingredientName[i]);
+			ingredientSelection.add(ingredientAmount[i]);
 			ingredientSelection.add(ingriedentPlusButtons[i]);
 			ingredientSelection.add(ingriedentMinusButtons[i]);
+
 		}
 		
 		ingredientSelection.add(cancel);
 		ingredientSelection.add(submit);
-		ingredientSelection.setLayout(new GridLayout(7, 1));
+		ingredientSelection.setLayout(new FlowLayout());
+
 
 		changeToIngredients();
 		
