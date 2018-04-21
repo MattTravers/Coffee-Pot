@@ -7,6 +7,7 @@ public class CoinSlot implements Subject {
 	private String[] money = { "penny", "nickel", "dime", "quarter", "dollar", "five" };
 	private boolean changeAvailable;
 	private String outputString;
+	private String outputType;
 
 	// in cents
 	private int balance = 0;
@@ -30,7 +31,7 @@ public class CoinSlot implements Subject {
 				break;
 			}
 		}
-		this.notifyObservers();
+		this.updateBalance();
 	}
 
 	public void deduct(int price) {
@@ -38,12 +39,13 @@ public class CoinSlot implements Subject {
 			// TODO throw appropriate exception
 		}
 		this.balance -= price;
+		this.updateBalance();
 	}
 
 	public void coinReturn() {
 		int temp = this.balance;
 		if (changeAvailable) {
-			//TODO do this is a super sweet swanky nice for loop
+			// TODO do this is a super sweet swanky nice for loop
 			int num;
 			if (temp >= 500) {
 				num = temp / 500;
@@ -80,7 +82,7 @@ public class CoinSlot implements Subject {
 			}
 		}
 		this.balance = 0;
-		this.notifyObservers();
+		this.updateBalance();
 
 		// check if we can give change still if we can't send text to output saying
 		// "change not provided"
@@ -90,14 +92,15 @@ public class CoinSlot implements Subject {
 			changeAvailable = true;
 		}
 	}
-
+	
+	private void updateBalance() {
+		this.outputString = String.format("$%d.%02d", this.getBalance() / 100, this.getBalance() % 100);
+		this.outputType = "Balance";
+		this.notifyObservers();
+	}
 	// getters and setters
 	public int getBalance() {
 		return this.balance;
-	}
-
-	public void setBalance(int amount) {
-		this.balance = amount;
 	}
 
 	@Override
@@ -107,8 +110,7 @@ public class CoinSlot implements Subject {
 
 	@Override
 	public void notifyObservers() {
-		this.outputString = String.format("$%d.%02d", this.getBalance() / 100, this.getBalance() % 100);
-		this.observer.update("Balance", this.outputString);
+		this.observer.update(this.outputType, this.outputString);
 	}
 
 	public String getOutput() {
