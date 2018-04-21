@@ -38,7 +38,9 @@ public class Dispenser implements Subject {
 			coinSlot.deduct(this.price);
 			this.outputString = "Coffee Machine dispenses " + this.drinkName;
 			for (Ingredient i : this.ingredients) {
-				this.outputString += ", " + i.getAmount() + " " + i.getName();
+				if (i.getAmount() != 0) {
+					this.outputString += ", " + i.getAmount() + " " + i.getName();
+				}
 			}
 			this.notifyObservers();
 		}
@@ -119,5 +121,9 @@ public class Dispenser implements Subject {
 		for (int i = 0; i < this.reserve.length; i++) {
 			this.reserve[i] = 25;
 		}
+	}
+
+	public String getOutput() {
+		return this.outputString;
 	}
 }
