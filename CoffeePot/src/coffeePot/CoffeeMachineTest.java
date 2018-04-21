@@ -89,7 +89,7 @@ public class CoffeeMachineTest {
 		Assert.assertEquals("Coffee Machine dispenses Regular Coffee, 25 Sugar", dispenser.getOutput());
 		dispenser.setDrinkName("Regular Coffee");
 		dispenser.increaseIngredient("Sugar");
-		Assert.assertEquals("Not enough Sugar", dispenser.getOutput());
+		Assert.assertEquals("Not enough Sugar. 0 left.", dispenser.getOutput());
 
 	}
 

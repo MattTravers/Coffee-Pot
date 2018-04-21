@@ -29,12 +29,12 @@ public class Dispenser implements Subject {
 	}
 
 	// processes a drink. Removes ingredients from reserve.
-	public void serveDrink() {
+	public boolean serveDrink() {
 		if (!coinSlot.isEnough(this.price)) {
 			this.outputString = "Please insert more money, " + drinkName + " costs " + price;
 			this.notifyObservers();
+			return false;
 		} else {
-			this.changeReserve(ingredients);
 			coinSlot.deduct(this.price);
 			this.outputString = "Coffee Machine dispenses " + this.drinkName;
 			for (Ingredient i : this.ingredients) {
@@ -42,7 +42,9 @@ public class Dispenser implements Subject {
 					this.outputString += ", " + i.getAmount() + " " + i.getName();
 				}
 			}
+			this.changeReserve(ingredients);
 			this.notifyObservers();
+			return true;
 		}
 	}
 
@@ -51,36 +53,44 @@ public class Dispenser implements Subject {
 		reserve[stringConverter(this.drinkName)]--;
 
 		// deduct ingredients from reserve
-		for (Ingredient i : ingredients) {
-			reserve[stringConverter(i.getName())] -= i.getAmount();
+		for (int i= 0; i < this.ingredients.size(); i++) {
+			reserve[stringConverter(ingredients.get(i).getName())] -= ingredients.get(i).getAmount();
+			ingredients.get(i).setAmount(0);
 		}
 	}
 
 	public void increaseIngredient(String ingredientName) {
-		for (Ingredient i : this.ingredients) {
-			if (i.getName().equals(ingredientName)) {
-				if (i.getAmount() < reserve[stringConverter(ingredientName)]) {
-					i.increaseAmount();
+		for (int i = 0; i < this.ingredients.size(); i++) {
+			Ingredient temp = this.ingredients.get(i);
+			if (temp.getName().equals(ingredientName)) {
+				if (temp.getAmount() < reserve[stringConverter(ingredientName)]) {
+					temp.increaseAmount();
+					this.outputString = "Amount of " + ingredientName + ": " + temp.getAmount();
 				} else {
-					this.outputString = "Not enough " + ingredientName;
-					this.notifyObservers();
+					this.outputString = "Not enough " + ingredientName +". " + temp.getAmount() + " left.";
 				}
 				break;
 			}
 		}
+		for(Ingredient i : this.ingredients) {
+			System.out.println(i.getName() + " " + i.getAmount());
+		}
+		this.notifyObservers();
 	}
 
 	public void decreaseIngredient(String ingredientName) {
 		for (Ingredient i : this.ingredients) {
 			if (i.getName().equals(ingredientName)) {
 				if (i.getAmount() == 0) {
-					;
+					this.outputString = "Amount of " + ingredientName + ": " + i.getAmount();;
 				} else {
 					i.decreaseAmount();
+					this.outputString = "Amount of " + ingredientName + ": " + i.getAmount();
 				}
 				break;
 			}
 		}
+		this.notifyObservers();
 	}
 
 	@Override
@@ -123,7 +133,17 @@ public class Dispenser implements Subject {
 		}
 	}
 
+	public ArrayList<Ingredient> getIngredients() {
+		return this.ingredients;
+	}
+
 	public String getOutput() {
 		return this.outputString;
+	}
+
+	public void resetIngredients() {
+		for(int i = 0; i < this.ingredients.size(); i++) {
+			this.ingredients.get(i).setAmount(0);
+		}
 	}
 }

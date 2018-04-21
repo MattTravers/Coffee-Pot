@@ -17,6 +17,10 @@ public class Ingredient {
 		return amount;
 	}
 	
+	public void setAmount(int n) {
+		this.amount = 0;
+	}
+	
 	public void increaseAmount() {
 		this.amount++;
 	}
