@@ -14,7 +14,6 @@ public class TheController {
 	private Dispenser dispenser;
 	private CoinSlot coinSlot;
 	
-	private String currentDrink = "";
 
 	// Attributes for ActionListeners
 	private ArrayList<Ingredient> ingredientChanges = new ArrayList<Ingredient>();
@@ -70,18 +69,10 @@ public class TheController {
 
 		ActionListener drinkPressed = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				currentDrink = button.getText();
-				ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
 				String drinkName = button.getText();
 
-				for (Drink drink : drinkMenu) {
-					if (drink.getName() == drinkName) {
-						ingredients = drink.getIngredients();
-					}
-				}
-
-				view.makeIngredientsMenu(ingredients);
 				dispenser.setDrinkName(drinkName);
+				view.makeIngredientsMenu(dispenser.getIngredients());
 
 			}
 		};
@@ -95,25 +86,8 @@ public class TheController {
 		ActionListener increasePressed = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				String name = button.getText().substring(1, button.getText().length()-1);
-				
-				boolean inList = false;
-
-				for (Ingredient i : ingredientChanges) {
-					if (name.equals(i.getName())) {
-						i.increaseAmount();
-						view.updateOutput("Amount of " +i.getName() + ": "+ i.getAmount() );
-						inList = true;
-					}
-				}
-
-				if (!inList) {
-					Ingredient i = new Ingredient(name, 1);
-					ingredientChanges.add(i);
-					view.updateOutput("Amount of " +i.getName() + ": "+ i.getAmount() );
-				}
-
-				dispenser.increaseIngredient(button.getText());
+				String name = button.getText().substring(1, button.getText().length() - 1);
+				dispenser.increaseIngredient(name);
 			}
 		};
 
@@ -125,20 +99,9 @@ public class TheController {
 
 		ActionListener decreasePressed = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				String name = button.getText().substring(1, button.getText().length()-1);
 
-				boolean inList = false;
-
-				for (Ingredient i : ingredientChanges) {
-					if (name.equals(i.getName())) {
-						i.decreaseAmount();
-						view.updateOutput("Amount of " +i.getName() + ": "+ i.getAmount() );
-						inList = true;
-					}
-				}
-				System.out.println(ingredientChanges);
-				dispenser.decreaseIngredient(button.getText());
+				String name = button.getText().substring(1, button.getText().length() - 1);
+				dispenser.decreaseIngredient(name);
 
 			}
 		};
@@ -177,20 +140,20 @@ public class TheController {
 
 		ActionListener submit = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispenser.serveDrink();
-				ingredientChanges.clear();
-				view.makeDrinksMenu();
+				boolean served = dispenser.serveDrink();
+				if (served)
+					view.makeDrinksMenu();
 			}
 		};
 
 		return submit;
 	}
-	
+
 	public ActionListener cancel(JButton button) {
 
 		ActionListener cancel = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ingredientChanges.clear();
+				dispenser.resetIngredients();
 				view.updateOutput("");
 				view.makeDrinksMenu();
 			}
