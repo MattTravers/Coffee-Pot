@@ -100,7 +100,6 @@ public class TheView extends JFrame implements Observer {
 
 		makeDrinksMenu();
 		orderMenu.add(outputSection, BorderLayout.SOUTH);
-		// orderMenu.add(drinkSelection,BorderLayout.CENTER);
 		orderMenu.add(balanceSection, BorderLayout.NORTH);
 		orderMenu.add(coinSelection, BorderLayout.WEST);
 
@@ -120,6 +119,7 @@ public class TheView extends JFrame implements Observer {
 		for (int i = 0; i < drinkMenu.size(); i++) {
 			drinkButtons[i] = new JButton(drinkMenu.get(i).getName());
 			drinkButtons[i].addActionListener(controller.drinkSelect(drinkButtons[i]));
+			drinkButtons[i].setFont(new Font("SansSerif", Font.BOLD, 20));
 			drinkSelection.add(drinkButtons[i]);
 		}
 
