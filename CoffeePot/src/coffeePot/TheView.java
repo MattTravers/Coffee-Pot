@@ -42,7 +42,7 @@ public class TheView extends JFrame implements Observer {
 	private JTextField outputField = new JTextField("", 30);
 	private JTextField balanceField = new JTextField("", 20);
 
-	private String coins[] = { "penny", "nickel", "dime", "quarter" };
+	private String coins[] = { "penny", "nickel", "dime", "quarter","dollar","five"};
 
 	// attributes for ingredient menu
 	private JButton ingriedentPlusButtons[];
@@ -69,18 +69,9 @@ public class TheView extends JFrame implements Observer {
 		balanceField.setEnabled(false);
 		outputField.setEnabled(false);
 
-		// drinkButtons = new JButton[drinkMenu.size()];
-		coinButtons = new JButton[drinkMenu.size()];
-
-		/*
-		 * // implement drink buttons for (int i = 0; i < drinkMenu.size(); i++) {
-		 * drinkButtons[i] = new JButton(drinkMenu.get(i).getName());
-		 * drinkButtons[i].addActionListener(controller.drinkSelect(drinkButtons[i]));
-		 * drinkSelection.add(drinkButtons[i]); }
-		 */
+		coinButtons = new JButton[coins.length];
 
 		// implement coin buttons
-
 		coinSelection.add(COINSLOT);
 
 		for (int i = 0; i < coins.length; i++) {
@@ -150,15 +141,18 @@ public class TheView extends JFrame implements Observer {
 		ingredientAmount = new JTextField[ingredients.size()];
 		ingredientName = new JLabel[ingredients.size()];
 		ingredientPanel = new JPanel[ingredients.size()];
-		
+		ingredientSelection.add(new JPanel());
+
 		for (int i = 0; i < ingredients.size(); i++) {
 			ingredientName[i] = new JLabel(ingredients.get(i).getName());
 			ingredientAmount[i] = new JTextField("0", 4);
 			ingredientAmount[i].setEnabled(false);
-			ingriedentPlusButtons[i] = new JButton("+");
 			ingriedentMinusButtons[i] = new JButton("-");
-			ingriedentPlusButtons[i].addActionListener(controller.incrementIngredient(ingriedentPlusButtons[i],ingredientName[i].getText()));
-			ingriedentMinusButtons[i].addActionListener(controller.decrementIngredient(ingriedentMinusButtons[i],ingredientName[i].getText()));
+			ingriedentPlusButtons[i] = new JButton("+");
+			ingriedentPlusButtons[i].addActionListener(
+					controller.incrementIngredient(ingriedentPlusButtons[i], ingredientName[i].getText()));
+			ingriedentMinusButtons[i].addActionListener(
+					controller.decrementIngredient(ingriedentMinusButtons[i], ingredientName[i].getText()));
 			ingredientPanel[i] = new JPanel();
 			ingredientPanel[i].add(ingredientName[i]);
 			ingredientPanel[i].add(ingredientAmount[i]);
@@ -167,10 +161,11 @@ public class TheView extends JFrame implements Observer {
 			ingredientSelection.add(ingredientPanel[i]);
 		}
 		JPanel submitPanel = new JPanel();
-		submitPanel.add(submit);
 		submitPanel.add(cancel);
+		submitPanel.add(submit);
+
 		ingredientSelection.add(submitPanel);
-		ingredientSelection.setLayout(new GridLayout(6,0));
+		ingredientSelection.setLayout(new GridLayout(ingredientPanel.length + 3, 0));
 
 		changeToIngredients();
 
@@ -203,12 +198,11 @@ public class TheView extends JFrame implements Observer {
 
 	public void updateIngredient(int n, String ingredient) {
 		for (int i = 0; i < this.ingredientName.length; i++) {
-			if(this.ingredientName[i].getText().equals(ingredient)){
+			if (this.ingredientName[i].getText().equals(ingredient)) {
 				this.ingredientAmount[i].setText("" + n);
 			}
 		}
 	}
-
 
 	public void updateOutput(String string) {
 		outputField.setText(string);
