@@ -13,10 +13,6 @@ public class TheController {
 	private TheView view;
 	private Dispenser dispenser;
 	private CoinSlot coinSlot;
-	
-
-	// Attributes for ActionListeners
-	private ArrayList<Ingredient> ingredientChanges = new ArrayList<Ingredient>();
 
 	// Attributes for creating the drinkMenu
 	private Scanner menuFile;
@@ -72,8 +68,11 @@ public class TheController {
 				String drinkName = button.getText();
 
 				dispenser.setDrinkName(drinkName);
-				view.makeIngredientsMenu(dispenser.getIngredients());
-
+				if (dispenser.getIngredients().size() == 0) {
+					dispenser.serveDrink();
+				} else {
+					view.makeIngredientsMenu(dispenser.getIngredients());
+				}
 			}
 		};
 
@@ -81,13 +80,13 @@ public class TheController {
 	}
 
 	// ingredient increase button
-	public ActionListener incrementIngredient(JButton button) {
+	public ActionListener incrementIngredient(JButton button,String name) {
 
 		ActionListener increasePressed = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				String name = button.getText().substring(1, button.getText().length() - 1);
 				dispenser.increaseIngredient(name);
+
 			}
 		};
 
@@ -95,12 +94,11 @@ public class TheController {
 	}
 
 	// ingredient decrease button
-	public ActionListener decrementIngredient(JButton button) {
+	public ActionListener decrementIngredient(JButton button,String name) {
 
 		ActionListener decreasePressed = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				String name = button.getText().substring(1, button.getText().length() - 1);
 				dispenser.decreaseIngredient(name);
 
 			}
@@ -141,8 +139,9 @@ public class TheController {
 		ActionListener submit = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean served = dispenser.serveDrink();
-				if (served)
+				if (served) {
 					view.makeDrinksMenu();
+				}
 			}
 		};
 
