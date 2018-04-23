@@ -63,7 +63,7 @@ public class CoffeeMachineTest {
 	public void testCoinReturn() {
 		coinSlot.insert("quarter");
 		coinSlot.coinReturn();
-		Assert.assertEquals("$0.00", coinSlot.getOutput());
+		Assert.assertEquals(0, coinSlot.getBalance());
 	}
 
 	// Sally puts in two quarters, walks away Balance should show 50 cents.
@@ -82,6 +82,7 @@ public class CoffeeMachineTest {
 		coinSlot.insert("quarter");
 		coinSlot.insert("quarter");
 		dispenser.setDrinkName("Regular Coffee");
+		theView.makeIngredientsMenu(dispenser.getIngredients());
 		for (int i = 0; i < 25; i++) {
 			dispenser.increaseIngredient("Sugar");
 		}
