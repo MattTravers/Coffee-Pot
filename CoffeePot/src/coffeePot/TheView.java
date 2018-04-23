@@ -2,17 +2,18 @@ package coffeePot;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class TheView extends JFrame implements Observer {
@@ -39,7 +40,7 @@ public class TheView extends JFrame implements Observer {
 	private JLabel BALANCE = new JLabel("BALANCE");
 	private JLabel COINSLOT = new JLabel("   COIN SLOT");
 
-	private JTextField outputField = new JTextField("", 30);
+	private JTextField outputField = new JTextField(32);
 	private JTextField balanceField = new JTextField("", 20);
 
 	private String coins[] = { "penny", "nickel", "dime", "quarter","dollar","five"};
@@ -67,8 +68,10 @@ public class TheView extends JFrame implements Observer {
 		drinkSelection.setLayout(new GridLayout(drinkMenu.size(), 3));
 
 		balanceField.setEnabled(false);
+		balanceField.setFont(new Font("SansSerif", Font.BOLD, 14));
 		outputField.setEnabled(false);
-
+		outputField.setFont(new Font("SansSerif", Font.BOLD, 14));
+		
 		coinButtons = new JButton[coins.length];
 
 		// implement coin buttons
