@@ -41,7 +41,7 @@ public class TheView extends JFrame implements Observer {
 	private JLabel COINSLOT = new JLabel("   COIN SLOT");
 
 	private JTextField outputField = new JTextField(32);
-	private JTextField balanceField = new JTextField("", 20);
+	private JTextField balanceField = new JTextField("$0.00", 8);
 
 	private String coins[] = { "penny", "nickel", "dime", "quarter","dollar","five"};
 
@@ -69,8 +69,10 @@ public class TheView extends JFrame implements Observer {
 
 		balanceField.setEnabled(false);
 		balanceField.setFont(new Font("SansSerif", Font.BOLD, 14));
+		balanceField.setHorizontalAlignment(JTextField.CENTER);
 		outputField.setEnabled(false);
 		outputField.setFont(new Font("SansSerif", Font.BOLD, 14));
+		outputField.setHorizontalAlignment(JTextField.CENTER);
 		
 		coinButtons = new JButton[coins.length];
 
@@ -148,8 +150,11 @@ public class TheView extends JFrame implements Observer {
 
 		for (int i = 0; i < ingredients.size(); i++) {
 			ingredientName[i] = new JLabel(ingredients.get(i).getName());
+			ingredientName[i].setFont(new Font("SansSerif", Font.BOLD, 14));
 			ingredientAmount[i] = new JTextField("0", 4);
 			ingredientAmount[i].setEnabled(false);
+			ingredientAmount[i].setFont(new Font("SansSerif", Font.BOLD, 14));
+			ingredientAmount[i].setHorizontalAlignment(JTextField.CENTER);
 			ingriedentMinusButtons[i] = new JButton("-");
 			ingriedentPlusButtons[i] = new JButton("+");
 			ingriedentPlusButtons[i].addActionListener(
