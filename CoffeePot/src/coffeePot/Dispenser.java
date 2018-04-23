@@ -93,14 +93,21 @@ public class Dispenser implements Subject {
 	}
 
 	// sets drink name. Also updates price by referencing the drinkMenu
-	public void setDrinkName(String drinkName) {
-		this.drinkName = drinkName;
-		for (Drink d : drinkMenu) {
-			if (d.getName().equals(drinkName)) {
-				this.price = d.getPrice();
-				this.ingredients = d.getIngredients();
-				break;
+	public boolean setDrinkName(String drinkName) {
+		if (this.reserve[this.stringConverter(drinkName)] <= 0) {
+			this.outputString = "Out of " + drinkName;
+			observer.updateOutput(this.outputString);
+			return false;
+		} else {
+			this.drinkName = drinkName;
+			for (Drink d : drinkMenu) {
+				if (d.getName().equals(drinkName)) {
+					this.price = d.getPrice();
+					this.ingredients = d.getIngredients();
+					break;
+				}
 			}
+			return true;
 		}
 	}
 

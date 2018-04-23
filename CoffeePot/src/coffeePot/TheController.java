@@ -67,11 +67,13 @@ public class TheController {
 			public void actionPerformed(ActionEvent e) {
 				String drinkName = button.getText();
 
-				dispenser.setDrinkName(drinkName);
-				if (dispenser.getIngredients().size() == 0) {
-					dispenser.serveDrink();
-				} else {
-					view.makeIngredientsMenu(dispenser.getIngredients());
+				boolean hasEnoughOfDrink = dispenser.setDrinkName(drinkName);
+				if (hasEnoughOfDrink) {
+					if (dispenser.getIngredients().size() == 0) {
+						dispenser.serveDrink();
+					} else {
+						view.makeIngredientsMenu(dispenser.getIngredients());
+					}
 				}
 			}
 		};
@@ -80,7 +82,7 @@ public class TheController {
 	}
 
 	// ingredient increase button
-	public ActionListener incrementIngredient(JButton button,String name) {
+	public ActionListener incrementIngredient(JButton button, String name) {
 
 		ActionListener increasePressed = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -94,7 +96,7 @@ public class TheController {
 	}
 
 	// ingredient decrease button
-	public ActionListener decrementIngredient(JButton button,String name) {
+	public ActionListener decrementIngredient(JButton button, String name) {
 
 		ActionListener decreasePressed = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
