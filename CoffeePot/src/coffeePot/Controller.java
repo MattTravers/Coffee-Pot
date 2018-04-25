@@ -8,9 +8,9 @@ import java.util.Scanner;
 
 import javax.swing.JButton;
 
-public class TheController {
+public class Controller {
 	// Attributes
-	private TheView view;
+	private View view;
 	private Dispenser dispenser;
 	private CoinSlot coinSlot;
 
@@ -19,7 +19,7 @@ public class TheController {
 	private ArrayList<Drink> drinkMenu;
 
 	// Constructor
-	public TheController(TheView view, Dispenser dispenser, CoinSlot coinSlot) {
+	public Controller(View view, Dispenser dispenser, CoinSlot coinSlot) {
 		// Models
 		this.dispenser = dispenser;
 		this.coinSlot = coinSlot;

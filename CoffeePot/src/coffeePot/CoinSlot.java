@@ -1,18 +1,39 @@
 package coffeePot;
 
+import java.util.EnumSet;
+
 public class CoinSlot implements Subject {
 	private Observer observer;
-	private int[] coins = { 1, 5, 10, 25, 100, 500 };
 	private int[] coinStock;
-	private String[] money = { "penny", "nickel", "dime", "quarter", "dollar", "five" };
 	private boolean changeAvailable;
 	private String outputString;
 
 	// in cents
 	private int balance = 0;
-
+	
+	private enum money{
+		NICKEL("nickel",5),DIME("dime",10),QUARTER("quarter",25),DOLLAR("dollar",100),FIVE("five",500);
+		
+		private int value;
+		private String name;
+		
+		private money(String name, int value) {
+			this.value = value;
+			this.name = name;
+		}
+		
+		public String getName() {
+			return this.name;
+		}
+		
+		public int getAmount() {
+			return this.value;
+		}
+	}
+	
 	public CoinSlot() {
-		coinStock = new int[money.length];
+		EnumSet<money> tempMoneySet = EnumSet.allOf(money.class);
+		coinStock = new int[tempMoneySet.size()];
 		for (int i = 0; i < coinStock.length; i++) {
 			coinStock[i] = 100;
 		}
@@ -23,61 +44,66 @@ public class CoinSlot implements Subject {
 	}
 
 	public void insert(String money) {
-		for (int i = 0; i < this.money.length; i++) {
-			if (this.money[i].equals(money)) {
-				balance += coins[i];
-				coinStock[i]++;
+		EnumSet<money> tempMoneySet = EnumSet.allOf(money.class);
+		int index = 0;
+		for(money m : tempMoneySet) {
+			if(m.getName().equals(money)) {
+				balance += m.getAmount();
+				this.updateBalance();
+				this.outputString = "Inserted a " + m.getName();
+				this.updateOutput();
+				coinStock[index]++;
 				break;
 			}
+			index++;
 		}
-		this.updateBalance();
 	}
 
 	public void deduct(int price) {
 		if (this.balance < price) {
-			// TODO throw appropriate exception
+			throw new IllegalArgumentException("Tried to deduct more than the balance");
 		}
 		this.balance -= price;
 		this.updateBalance();
 	}
 
 	public void coinReturn() {
-		int temp = this.balance;
+		int tempBalance = this.balance;
 		if (changeAvailable) {
-			// TODO do this is a super sweet swanky nice for loop
+			// TODO do this in a super sweet swanky nice for loop
 			int num;
-			if (temp >= 500) {
-				num = temp / 500;
+			if (tempBalance >= 500) {
+				num = tempBalance / 500;
 				if (coinStock[5] >= num) {
 					coinStock[5] -= num;
 				}
 			}
-			if (temp >= 100) {
-				num = temp / 100;
+			if (tempBalance >= 100) {
+				num = tempBalance / 100;
 				if (coinStock[4] >= num) {
 					coinStock[4] -= num;
 				}
 			}
-			if (temp >= 25) {
-				num = temp / 25;
+			if (tempBalance >= 25) {
+				num = tempBalance / 25;
 				if (coinStock[3] >= num) {
 					coinStock[3] -= num;
 				}
 			}
-			if (temp >= 10) {
-				num = temp / 10;
+			if (tempBalance >= 10) {
+				num = tempBalance / 10;
 				if (coinStock[2] >= num) {
 					coinStock[2] -= num;
 				}
 			}
-			if (temp >= 5) {
-				num = temp / 5;
+			if (tempBalance >= 5) {
+				num = tempBalance / 5;
 				if (coinStock[1] >= num) {
 					coinStock[1] -= num;
 				}
 			}
-			if (temp > 0) {
-				coinStock[0] -= temp;
+			if (tempBalance > 0) {
+				coinStock[0] -= tempBalance;
 			}
 		}
 		this.balance = 0;
@@ -94,6 +120,10 @@ public class CoinSlot implements Subject {
 	
 	private void updateBalance() {
 		this.observer.updateBalance(String.format("$%d.%02d", this.getBalance() / 100, this.getBalance() % 100));
+	}
+	
+	private void updateOutput() {
+		this.observer.updateOutput(outputString);
 	}
 	// getters and setters
 	public int getBalance() {

@@ -13,12 +13,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class TheView extends JFrame implements Observer {
+public class View extends JFrame implements Observer {
 	// non-view attributes
-	private TheController controller;
+	private Controller controller;
 	private ArrayList<Drink> drinkMenu;
 
 	// view attributes
@@ -43,7 +42,7 @@ public class TheView extends JFrame implements Observer {
 	private JTextField outputField = new JTextField(32);
 	private JTextField balanceField = new JTextField("$0.00", 8);
 
-	private String coins[] = { "penny", "nickel", "dime", "quarter","dollar","five"};
+	private String coins[] = { "nickel", "dime", "quarter", "dollar", "five" };
 
 	// attributes for ingredient menu
 	private JButton ingriedentPlusButtons[];
@@ -60,7 +59,7 @@ public class TheView extends JFrame implements Observer {
 		}
 	};
 
-	public TheView() {
+	public View() {
 	}
 
 	/// MAIN INSTANTIATING RUN///
@@ -73,7 +72,7 @@ public class TheView extends JFrame implements Observer {
 		outputField.setEnabled(false);
 		outputField.setFont(new Font("SansSerif", Font.BOLD, 14));
 		outputField.setHorizontalAlignment(JTextField.CENTER);
-		
+
 		coinButtons = new JButton[coins.length];
 
 		// implement coin buttons
@@ -225,7 +224,7 @@ public class TheView extends JFrame implements Observer {
 		this.drinkMenu = drinkMenu;
 	}
 
-	public void setController(TheController controller) {
+	public void setController(Controller controller) {
 		this.controller = controller;
 	}
 

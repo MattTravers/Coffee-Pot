@@ -30,7 +30,8 @@ public class Dispenser implements Subject {
 	// processes a drink. Removes ingredients from reserve.
 	public boolean serveDrink() {
 		if (!coinSlot.isEnough(this.price)) {
-			this.outputString = "Please insert more money, " + drinkName + " costs " + price;
+			this.outputString = "Please insert more money, " + drinkName + " costs "
+					+ String.format("$%d.%02d", price / 100, price % 100);
 			this.observer.updateOutput(this.outputString);
 			return false;
 		} else {
@@ -89,7 +90,7 @@ public class Dispenser implements Subject {
 
 	@Override
 	public void registerObserver(Observer observer) {
-		this.observer = (TheView) observer;
+		this.observer = (View) observer;
 	}
 
 	// sets drink name. Also updates price by referencing the drinkMenu

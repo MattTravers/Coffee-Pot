@@ -8,10 +8,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class CoffeeMachineTest {
-	TheView theView;
+	View theView;
 	CoinSlot coinSlot;
 	Dispenser dispenser;
-	TheController theController;
+	Controller theController;
 
 	@BeforeClass
 	public static void onlyOnce() {
@@ -21,14 +21,14 @@ public class CoffeeMachineTest {
 	@Before
 	public void setUp() { // setup is the same as main in CoffeeMachine except it doesn't run the view
 		// view class
-		theView = new TheView();
+		theView = new View();
 
 		// model classes
 		coinSlot = new CoinSlot();
 		dispenser = new Dispenser(coinSlot);
 
 		// controller class
-		theController = new TheController(theView, dispenser, coinSlot);
+		theController = new Controller(theView, dispenser, coinSlot);
 
 		// setting up observers
 		dispenser.registerObserver(theView);
