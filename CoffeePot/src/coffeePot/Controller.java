@@ -44,11 +44,11 @@ public class Controller {
 			int drinkPrice = Integer.parseInt(menuFile.nextLine());
 			Drink drink = new Drink(drinkName, drinkPrice);
 
-			// Get ingredients and add to drink
-			String ingredient = menuFile.nextLine();
-			while (!ingredient.equals("endDrink")) {
-				drink.addIngredient(ingredient, 0);
-				ingredient = menuFile.nextLine();
+			// Get condiments and add to drink
+			String condiment = menuFile.nextLine();
+			while (!condiment.equals("endDrink")) {
+				drink.addCondiment(condiment, 0);
+				condiment = menuFile.nextLine();
 			}
 
 			// Add drink to drinkMenu
@@ -69,10 +69,10 @@ public class Controller {
 
 				boolean hasEnoughOfDrink = dispenser.setDrinkName(drinkName);
 				if (hasEnoughOfDrink) {
-					if (dispenser.getIngredients().size() == 0) {
+					if (dispenser.getCondiment().size() == 0) {
 						dispenser.serveDrink();
 					} else {
-						view.makeIngredientsMenu(dispenser.getIngredients());
+						view.makeCondimentMenu(dispenser.getCondiment());
 					}
 				}
 			}
@@ -81,13 +81,13 @@ public class Controller {
 		return drinkPressed;
 	}
 
-	// ingredient increase button
-	public ActionListener incrementIngredient(JButton button, String name) {
+	// condiment increase button
+	public ActionListener incrementCondiment(JButton button, String name) {
 
 		ActionListener increasePressed = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				dispenser.increaseIngredient(name);
+				dispenser.increaseCondiment(name);
 
 			}
 		};
@@ -95,13 +95,13 @@ public class Controller {
 		return increasePressed;
 	}
 
-	// ingredient decrease button
-	public ActionListener decrementIngredient(JButton button, String name) {
+	// condiment decrease button
+	public ActionListener decrementCondiment(JButton button, String name) {
 
 		ActionListener decreasePressed = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				dispenser.decreaseIngredient(name);
+				dispenser.decreaseCondiment(name);
 
 			}
 		};
@@ -154,7 +154,7 @@ public class Controller {
 
 		ActionListener cancel = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispenser.resetIngredients();
+				dispenser.resetCondiments();
 				view.updateOutput("");
 				view.makeDrinksMenu();
 			}

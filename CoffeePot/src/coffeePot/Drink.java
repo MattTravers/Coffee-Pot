@@ -3,19 +3,24 @@ package coffeePot;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Drink implements Iterable<Ingredient> {
+/**
+ * Drink class is used to store the name, price, and list of potential add ins
+ * for a drink
+ *
+ */
+public class Drink implements Iterable<Condiment> {
 	private String name;
 	private int price;
-	private ArrayList<Ingredient> ingredients;
-	
+	private ArrayList<Condiment> condiments;
+
 	public Drink(String name, int price) {
 		this.name = name;
 		this.price = price;
-		this.ingredients = new ArrayList<Ingredient>();
+		this.condiments = new ArrayList<Condiment>();
 	}
 
-	public void addIngredient(String ingredient, int amount) {
-		ingredients.add(new Ingredient(ingredient,amount));
+	public void addCondiment(String condiment, int amount) {
+		condiments.add(new Condiment(condiment, amount));
 	}
 
 	public String getName() {
@@ -25,16 +30,14 @@ public class Drink implements Iterable<Ingredient> {
 	public int getPrice() {
 		return price;
 	}
-	
-	public ArrayList<Ingredient> getIngredients(){
-		return this.ingredients;
+
+	public ArrayList<Condiment> condiments() {
+		return this.condiments;
 	}
 
 	@Override
-	public Iterator<Ingredient> iterator() {
-		return ingredients.iterator();
+	public Iterator<Condiment> iterator() {
+		return condiments.iterator();
 	}
 
-		
-	
 }

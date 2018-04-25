@@ -13,7 +13,7 @@ public class Dispenser implements Subject {
 	// drink info updated with every button click the view
 	private String drinkName;
 	private int price;
-	private ArrayList<Ingredient> ingredients;
+	private ArrayList<Condiment> condiments;
 
 	public Dispenser(CoinSlot coinSlot) {
 		this.coinSlot = coinSlot;
@@ -27,48 +27,53 @@ public class Dispenser implements Subject {
 		return -1;
 	}
 
-	// processes a drink. Removes ingredients from reserve.
+	// processes a drink. Removes condiments from reserve.
 	public boolean serveDrink() {
 		if (!coinSlot.isEnough(this.price)) {
 			this.outputString = "Please insert more money, " + drinkName + " costs "
 					+ String.format("$%d.%02d", price / 100, price % 100);
-			this.observer.updateOutput(this.outputString);
+			this.updateOutput();
 			return false;
 		} else {
 			coinSlot.deduct(this.price);
 			this.outputString = "Coffee Machine dispenses " + this.drinkName;
-			for (Ingredient i : this.ingredients) {
+			for (Condiment i : this.condiments) {
 				if (i.getAmount() != 0) {
 					this.outputString += ", " + i.getAmount() + " " + i.getName();
 				}
 			}
-			this.changeReserve(ingredients);
-			this.observer.updateOutput(this.outputString);
+			this.changeReserve(condiments);
+			this.updateOutput();
 			return true;
 		}
 	}
 
-	public void changeReserve(ArrayList<Ingredient> ingredients) {
+	public void changeReserve(ArrayList<Condiment> condiments) {
 		// deduct drink from reserve
 		reserve[stringConverter(this.drinkName)]--;
 
-		// deduct ingredients from reserve
-		for (int i = 0; i < this.ingredients.size(); i++) {
-			reserve[stringConverter(ingredients.get(i).getName())] -= ingredients.get(i).getAmount();
-			ingredients.get(i).setAmount(0);
+		// deduct condiments from reserve
+		for (int i = 0; i < this.condiments.size(); i++) {
+			reserve[stringConverter(condiments.get(i).getName())] -= condiments.get(i).getAmount();
+			condiments.get(i).setAmount(0);
 		}
 	}
 
-	public void increaseIngredient(String ingredientName) {
-		for (int i = 0; i < this.ingredients.size(); i++) {
-			Ingredient temp = this.ingredients.get(i);
-			if (temp.getName().equals(ingredientName)) {
-				if (temp.getAmount() < reserve[stringConverter(ingredientName)]) {
-					temp.increaseAmount();
-					observer.updateIngredient(temp.getAmount(), temp.getName());
+	public void increaseCondiment(String condimentName) {
+		this.clearOutput();
+		for (int i = 0; i < this.condiments.size(); i++) {
+			Condiment tempCondiment = this.condiments.get(i);
+
+			if (tempCondiment.getName().equals(condimentName)) {
+				if (tempCondiment.getAmount() == 5) {
+					this.outputString = "Max of 5";
+					this.updateOutput();
+				} else if (tempCondiment.getAmount() < reserve[stringConverter(condimentName)]) {
+					tempCondiment.increaseAmount();
+					observer.updateCondiment(tempCondiment.getAmount(), tempCondiment.getName());
 				} else {
-					this.outputString = "Not enough " + ingredientName + ". " + temp.getAmount() + " left.";
-					this.observer.updateOutput(this.outputString);
+					this.outputString = "Not enough " + condimentName + ". " + tempCondiment.getAmount() + " left.";
+					this.updateOutput();
 				}
 				break;
 			}
@@ -76,12 +81,17 @@ public class Dispenser implements Subject {
 
 	}
 
-	public void decreaseIngredient(String ingredientName) {
-		for (Ingredient i : this.ingredients) {
-			if (i.getName().equals(ingredientName)) {
+	private void updateOutput() {
+		this.observer.updateOutput(this.outputString);
+	}
+
+	public void decreaseCondiment(String condimentName) {
+		this.clearOutput();
+		for (Condiment i : this.condiments) {
+			if (i.getName().equals(condimentName)) {
 				if (i.getAmount() > 0) {
 					i.decreaseAmount();
-					observer.updateIngredient(i.getAmount(), i.getName());
+					observer.updateCondiment(i.getAmount(), i.getName());
 				}
 				break;
 			}
@@ -95,6 +105,7 @@ public class Dispenser implements Subject {
 
 	// sets drink name. Also updates price by referencing the drinkMenu
 	public boolean setDrinkName(String drinkName) {
+		this.clearOutput();
 		if (this.reserve[this.stringConverter(drinkName)] <= 0) {
 			this.outputString = "Out of " + drinkName;
 			observer.updateOutput(this.outputString);
@@ -104,12 +115,17 @@ public class Dispenser implements Subject {
 			for (Drink d : drinkMenu) {
 				if (d.getName().equals(drinkName)) {
 					this.price = d.getPrice();
-					this.ingredients = d.getIngredients();
+					this.condiments = d.condiments();
 					break;
 				}
 			}
 			return true;
 		}
+	}
+
+	public void clearOutput() {
+		this.outputString = "";
+		this.observer.updateOutput(this.outputString);
 	}
 
 	public void setReserveLabels(ArrayList<Drink> drinkMenu) {
@@ -119,7 +135,7 @@ public class Dispenser implements Subject {
 		for (Drink d : drinkMenu) {
 			this.reserveLabels.add(d.getName());
 			count++;
-			for (Ingredient i : d) {
+			for (Condiment i : d) {
 				this.reserveLabels.add(i.getName());
 				count++;
 			}
@@ -130,17 +146,17 @@ public class Dispenser implements Subject {
 		}
 	}
 
-	public ArrayList<Ingredient> getIngredients() {
-		return this.ingredients;
+	public ArrayList<Condiment> getCondiment() {
+		return this.condiments;
 	}
 
 	public String getOutput() {
 		return this.outputString;
 	}
 
-	public void resetIngredients() {
-		for (int i = 0; i < this.ingredients.size(); i++) {
-			this.ingredients.get(i).setAmount(0);
+	public void resetCondiments() {
+		for (int i = 0; i < this.condiments.size(); i++) {
+			this.condiments.get(i).setAmount(0);
 		}
 	}
 }

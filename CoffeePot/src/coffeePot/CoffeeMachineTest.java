@@ -41,7 +41,7 @@ public class CoffeeMachineTest {
 		dispenser.setDrinkName("Regular Coffee");
 		coinSlot.insert("quarter");
 		dispenser.serveDrink();
-		Assert.assertEquals("Please insert more money, Regular Coffee costs 35", dispenser.getOutput());
+		Assert.assertEquals("Please insert more money, Regular Coffee costs $0.35", dispenser.getOutput());
 	}
 
 	// Sally puts in two quarters, presses dispense Dispenses coffee.
@@ -53,7 +53,7 @@ public class CoffeeMachineTest {
 		coinSlot.insert("quarter");
 
 		dispenser.serveDrink();
-		
+
 		Assert.assertEquals("Coffee Machine dispenses Regular Coffee", dispenser.getOutput());
 		Assert.assertEquals(15, coinSlot.getBalance());
 	}
@@ -77,19 +77,30 @@ public class CoffeeMachineTest {
 	// Sally buys two coffees, white with sugar. The sugar dispenser runs out of
 	// sugar after the first Dispenses one coffee, displays out of sugar.
 	@Test
-	public void testOutOfIngredient() {
-		coinSlot.insert("quarter");
-		coinSlot.insert("quarter");
-		coinSlot.insert("quarter");
-		dispenser.setDrinkName("Regular Coffee");
-		theView.makeIngredientsMenu(dispenser.getIngredients());
-		for (int i = 0; i < 25; i++) {
-			dispenser.increaseIngredient("Sugar");
+	public void testOutOfCondiment() {
+		// previous users use up most of the sugar
+		coinSlot.insert("five");
+		for (int i = 0; i < 6; i++) {
+			dispenser.setDrinkName("Regular Coffee");
+			theView.makeCondimentMenu(dispenser.getCondiment());
+			for (int j = 0; j < 4; j++) {
+				dispenser.increaseCondiment("Sugar");
+			}
+			dispenser.serveDrink();
 		}
-		dispenser.serveDrink();
-		Assert.assertEquals("Coffee Machine dispenses Regular Coffee, 25 Sugar", dispenser.getOutput());
+		coinSlot.coinReturn();
+		
+		//Sally 
+		coinSlot.insert("quarter");
+		coinSlot.insert("quarter");
+		coinSlot.insert("quarter");
 		dispenser.setDrinkName("Regular Coffee");
-		dispenser.increaseIngredient("Sugar");
+		theView.makeCondimentMenu(dispenser.getCondiment());
+		dispenser.increaseCondiment("Sugar");
+		dispenser.serveDrink();
+		Assert.assertEquals("Coffee Machine dispenses Regular Coffee, 1 Sugar", dispenser.getOutput());
+		dispenser.setDrinkName("Regular Coffee");
+		dispenser.increaseCondiment("Sugar");
 		Assert.assertEquals("Not enough Sugar. 0 left.", dispenser.getOutput());
 
 	}

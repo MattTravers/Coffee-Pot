@@ -1,5 +1,6 @@
 package coffeePot;
 
+//Main for starting up the coffee machine
 public class CoffeeMachine {
 	public static void main(String args[]) {
 		// view class

@@ -5,32 +5,31 @@ import java.util.EnumSet;
 public class CoinSlot implements Subject {
 	private Observer observer;
 	private int[] coinStock;
-	private boolean changeAvailable;
 	private String outputString;
 
 	// in cents
 	private int balance = 0;
-	
-	private enum money{
-		NICKEL("nickel",5),DIME("dime",10),QUARTER("quarter",25),DOLLAR("dollar",100),FIVE("five",500);
-		
+
+	private enum money {
+		NICKEL("nickel", 5), DIME("dime", 10), QUARTER("quarter", 25), DOLLAR("dollar", 100), FIVE("five", 500);
+
 		private int value;
 		private String name;
-		
+
 		private money(String name, int value) {
 			this.value = value;
 			this.name = name;
 		}
-		
+
 		public String getName() {
 			return this.name;
 		}
-		
+
 		public int getAmount() {
 			return this.value;
 		}
 	}
-	
+
 	public CoinSlot() {
 		EnumSet<money> tempMoneySet = EnumSet.allOf(money.class);
 		coinStock = new int[tempMoneySet.size()];
@@ -46,8 +45,8 @@ public class CoinSlot implements Subject {
 	public void insert(String money) {
 		EnumSet<money> tempMoneySet = EnumSet.allOf(money.class);
 		int index = 0;
-		for(money m : tempMoneySet) {
-			if(m.getName().equals(money)) {
+		for (money m : tempMoneySet) {
+			if (m.getName().equals(money)) {
 				balance += m.getAmount();
 				this.updateBalance();
 				this.outputString = "Inserted a " + m.getName();
@@ -69,62 +68,40 @@ public class CoinSlot implements Subject {
 
 	public void coinReturn() {
 		int tempBalance = this.balance;
-		if (changeAvailable) {
-			// TODO do this in a super sweet swanky nice for loop
-			int num;
-			if (tempBalance >= 500) {
-				num = tempBalance / 500;
-				if (coinStock[5] >= num) {
-					coinStock[5] -= num;
+		money[] tempMoneyArr = money.values();
+		int index = 0;
+		int numCoins;
+		this.outputString = "Returned ";
+		for (int i = tempMoneyArr.length - 1; i >= 0; i--) {
+			if (tempBalance >= tempMoneyArr[i].getAmount()) {
+				numCoins = tempBalance / tempMoneyArr[i].getAmount();
+				if (numCoins > coinStock[index]) {
+					numCoins = coinStock[index];
 				}
+				tempBalance -= numCoins * tempMoneyArr[i].getAmount();
+				this.outputString += numCoins + " "
+						+ (numCoins > 1 ? tempMoneyArr[i].getName() + "s" : tempMoneyArr[i].getName()) + ", ";
 			}
-			if (tempBalance >= 100) {
-				num = tempBalance / 100;
-				if (coinStock[4] >= num) {
-					coinStock[4] -= num;
-				}
-			}
-			if (tempBalance >= 25) {
-				num = tempBalance / 25;
-				if (coinStock[3] >= num) {
-					coinStock[3] -= num;
-				}
-			}
-			if (tempBalance >= 10) {
-				num = tempBalance / 10;
-				if (coinStock[2] >= num) {
-					coinStock[2] -= num;
-				}
-			}
-			if (tempBalance >= 5) {
-				num = tempBalance / 5;
-				if (coinStock[1] >= num) {
-					coinStock[1] -= num;
-				}
-			}
-			if (tempBalance > 0) {
-				coinStock[0] -= tempBalance;
-			}
+			index++;
 		}
-		this.balance = 0;
-		this.updateBalance();
-
-		// check if we can give change still if we can't send text to output saying
-		// "change not provided"
-		if (coinStock[0] < 5 || coinStock[1] < 2 || coinStock[2] < 3 || coinStock[3] < 4 || coinStock[4] < 5) {
-			changeAvailable = false;
+		if (tempBalance > 0) {
+			this.outputString = "Cannot provide exact change";
 		} else {
-			changeAvailable = true;
+			this.outputString = this.outputString.substring(0, this.outputString.length() - 2) + ".";
+			this.balance = 0;
 		}
+		this.updateOutput();
+		this.updateBalance();
 	}
-	
+
 	private void updateBalance() {
 		this.observer.updateBalance(String.format("$%d.%02d", this.getBalance() / 100, this.getBalance() % 100));
 	}
-	
+
 	private void updateOutput() {
 		this.observer.updateOutput(outputString);
 	}
+
 	// getters and setters
 	public int getBalance() {
 		return this.balance;

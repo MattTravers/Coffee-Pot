@@ -15,6 +15,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+
+/**
+ * The View class creates a GUI for a coffee pot.
+ *
+ */
 public class View extends JFrame implements Observer {
 	// non-view attributes
 	private Controller controller;
@@ -33,7 +38,7 @@ public class View extends JFrame implements Observer {
 	private JPanel drinkSelection = new JPanel();
 	private JPanel outputSection = new JPanel();
 	private JPanel balanceSection = new JPanel();
-	private JPanel ingredientSelection = new JPanel();
+	private JPanel condimentSelection = new JPanel();
 
 	private JLabel OUTPUT = new JLabel("OUTPUT");
 	private JLabel BALANCE = new JLabel("BALANCE");
@@ -44,12 +49,12 @@ public class View extends JFrame implements Observer {
 
 	private String coins[] = { "nickel", "dime", "quarter", "dollar", "five" };
 
-	// attributes for ingredient menu
-	private JButton ingriedentPlusButtons[];
-	private JButton ingriedentMinusButtons[];
-	private JTextField ingredientAmount[];
-	private JLabel ingredientName[];
-	private JPanel ingredientPanel[];
+	// attributes for condiment menu
+	private JButton condimentPlusButtons[];
+	private JButton condimentMinusButtons[];
+	private JTextField condimentAmount[];
+	private JLabel condimentName[];
+	private JPanel condimentPanel[];
 
 	WindowListener windowListener = new WindowAdapter() {
 
@@ -128,8 +133,8 @@ public class View extends JFrame implements Observer {
 
 	}
 
-	/// Make Ingredients Menu///
-	public void makeIngredientsMenu(ArrayList<Ingredient> ingredients) {
+	// Make condiments Menu
+	public void makeCondimentMenu(ArrayList<Condiment> condiment) {
 
 		orderWindow.invalidate();
 		orderWindow.validate();
@@ -140,47 +145,47 @@ public class View extends JFrame implements Observer {
 		submit.addActionListener(controller.submit(submit));
 		cancel.addActionListener(controller.cancel(cancel));
 
-		ingriedentPlusButtons = new JButton[ingredients.size()];
-		ingriedentMinusButtons = new JButton[ingredients.size()];
-		ingredientAmount = new JTextField[ingredients.size()];
-		ingredientName = new JLabel[ingredients.size()];
-		ingredientPanel = new JPanel[ingredients.size()];
-		ingredientSelection.add(new JPanel());
+		condimentPlusButtons = new JButton[condiment.size()];
+		condimentMinusButtons = new JButton[condiment.size()];
+		condimentAmount = new JTextField[condiment.size()];
+		condimentName = new JLabel[condiment.size()];
+		condimentPanel = new JPanel[condiment.size()];
+		condimentSelection.add(new JPanel());
 
-		for (int i = 0; i < ingredients.size(); i++) {
-			ingredientName[i] = new JLabel(ingredients.get(i).getName());
-			ingredientName[i].setFont(new Font("SansSerif", Font.BOLD, 14));
-			ingredientAmount[i] = new JTextField("0", 4);
-			ingredientAmount[i].setEnabled(false);
-			ingredientAmount[i].setFont(new Font("SansSerif", Font.BOLD, 14));
-			ingredientAmount[i].setHorizontalAlignment(JTextField.CENTER);
-			ingriedentMinusButtons[i] = new JButton("-");
-			ingriedentPlusButtons[i] = new JButton("+");
-			ingriedentPlusButtons[i].addActionListener(
-					controller.incrementIngredient(ingriedentPlusButtons[i], ingredientName[i].getText()));
-			ingriedentMinusButtons[i].addActionListener(
-					controller.decrementIngredient(ingriedentMinusButtons[i], ingredientName[i].getText()));
-			ingredientPanel[i] = new JPanel();
-			ingredientPanel[i].add(ingredientName[i]);
-			ingredientPanel[i].add(ingredientAmount[i]);
-			ingredientPanel[i].add(ingriedentPlusButtons[i]);
-			ingredientPanel[i].add(ingriedentMinusButtons[i]);
-			ingredientSelection.add(ingredientPanel[i]);
+		for (int i = 0; i < condiment.size(); i++) {
+			condimentName[i] = new JLabel(condiment.get(i).getName());
+			condimentName[i].setFont(new Font("SansSerif", Font.BOLD, 14));
+			condimentAmount[i] = new JTextField("0", 4);
+			condimentAmount[i].setEnabled(false);
+			condimentAmount[i].setFont(new Font("SansSerif", Font.BOLD, 14));
+			condimentAmount[i].setHorizontalAlignment(JTextField.CENTER);
+			condimentMinusButtons[i] = new JButton("-");
+			condimentPlusButtons[i] = new JButton("+");
+			condimentPlusButtons[i].addActionListener(
+					controller.incrementCondiment(condimentPlusButtons[i], condimentName[i].getText()));
+			condimentMinusButtons[i].addActionListener(
+					controller.decrementCondiment(condimentMinusButtons[i], condimentName[i].getText()));
+			condimentPanel[i] = new JPanel();
+			condimentPanel[i].add(condimentName[i]);
+			condimentPanel[i].add(condimentAmount[i]);
+			condimentPanel[i].add(condimentPlusButtons[i]);
+			condimentPanel[i].add(condimentMinusButtons[i]);
+			condimentSelection.add(condimentPanel[i]);
 		}
 		JPanel submitPanel = new JPanel();
 		submitPanel.add(cancel);
 		submitPanel.add(submit);
 
-		ingredientSelection.add(submitPanel);
-		ingredientSelection.setLayout(new GridLayout(ingredientPanel.length + 3, 0));
+		condimentSelection.add(submitPanel);
+		condimentSelection.setLayout(new GridLayout(condimentPanel.length + 3, 0));
 
-		changeToIngredients();
+		changeToCondiments();
 
 	}
 
 	public void changeToDrinks() {
-		orderWindow.getContentPane().remove(ingredientSelection);
-		ingredientSelection.removeAll();
+		orderWindow.getContentPane().remove(condimentSelection);
+		condimentSelection.removeAll();
 		orderWindow.invalidate();
 		orderWindow.validate();
 		orderWindow.add(drinkSelection, BorderLayout.CENTER);
@@ -190,23 +195,23 @@ public class View extends JFrame implements Observer {
 
 	}
 
-	public void changeToIngredients() {
+	public void changeToCondiments() {
 		orderWindow.getContentPane().remove(drinkSelection);
 		drinkSelection.removeAll();
 		orderWindow.invalidate();
 		orderWindow.validate();
 		orderWindow.getContentPane().remove(drinkSelection);
-		orderWindow.add(ingredientSelection, BorderLayout.CENTER);
+		orderWindow.add(condimentSelection, BorderLayout.CENTER);
 		orderWindow.invalidate();
 		orderWindow.validate();
 		orderWindow.setSize(500, 500);
 
 	}
 
-	public void updateIngredient(int n, String ingredient) {
-		for (int i = 0; i < this.ingredientName.length; i++) {
-			if (this.ingredientName[i].getText().equals(ingredient)) {
-				this.ingredientAmount[i].setText("" + n);
+	public void updateCondiment(int n, String condient) {
+		for (int i = 0; i < this.condimentName.length; i++) {
+			if (this.condimentName[i].getText().equals(condient)) {
+				this.condimentAmount[i].setText("" + n);
 			}
 		}
 	}
