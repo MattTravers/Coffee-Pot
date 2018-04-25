@@ -2,6 +2,12 @@ package coffeePot;
 
 import java.util.ArrayList;
 
+/**
+ * The Dispenser is a model class for a coffee pot. It is used to keep track of
+ * the user selection for a drink and deduct drink and condiment amounts from
+ * the reserve.
+ *
+ */
 public class Dispenser implements Subject {
 	private CoinSlot coinSlot;
 	private int reserve[];
@@ -15,10 +21,16 @@ public class Dispenser implements Subject {
 	private int price;
 	private ArrayList<Condiment> condiments;
 
+	/**
+	 * Dispenser constructor takes and sets a CoinSlot object.
+	 * 
+	 * @param coinSlot
+	 */
 	public Dispenser(CoinSlot coinSlot) {
 		this.coinSlot = coinSlot;
 	}
 
+	// used to convert a drink/condiment name into the index for the reserve
 	private int stringConverter(String name) {
 		for (int i = 0; i < reserveLabels.size(); i++) {
 			if (reserveLabels.get(i).equals(name))
@@ -27,7 +39,15 @@ public class Dispenser implements Subject {
 		return -1;
 	}
 
-	// processes a drink. Removes condiments from reserve.
+	/**
+	 * Method used to serve drink. If there is enough money in the coinslot for the
+	 * drink it updates the output in the view with the drink selection and deducts
+	 * the drink/condiments from the reserve.
+	 * 
+	 * Outputs error message if the balance is not enough to process the drink
+	 * 
+	 * @return
+	 */
 	public boolean serveDrink() {
 		if (!coinSlot.isEnough(this.price)) {
 			this.outputString = "Please insert more money, " + drinkName + " costs "
@@ -48,7 +68,8 @@ public class Dispenser implements Subject {
 		}
 	}
 
-	public void changeReserve(ArrayList<Condiment> condiments) {
+	// used to deduct drink/condiment from the reserve
+	private void changeReserve(ArrayList<Condiment> condiments) {
 		// deduct drink from reserve
 		reserve[stringConverter(this.drinkName)]--;
 
@@ -59,6 +80,12 @@ public class Dispenser implements Subject {
 		}
 	}
 
+	/**
+	 * Increments the given condiment amount. Max is 5. Will output error if
+	 * condiment would be greater than 5 or the amount in the reserve
+	 * 
+	 * @param condimentName
+	 */
 	public void increaseCondiment(String condimentName) {
 		this.clearOutput();
 		for (int i = 0; i < this.condiments.size(); i++) {
@@ -81,10 +108,16 @@ public class Dispenser implements Subject {
 
 	}
 
+	// sends outputString to the view to be displayed
 	private void updateOutput() {
 		this.observer.updateOutput(this.outputString);
 	}
 
+	/**
+	 * Decreases the given condiment amount if amount is > 0;
+	 * 
+	 * @param condimentName
+	 */
 	public void decreaseCondiment(String condimentName) {
 		this.clearOutput();
 		for (Condiment i : this.condiments) {
@@ -103,7 +136,13 @@ public class Dispenser implements Subject {
 		this.observer = (View) observer;
 	}
 
-	// sets drink name. Also updates price by referencing the drinkMenu
+	/**
+	 * Sets the current drink select and updates the price and condiment list for
+	 * the drink
+	 * 
+	 * @param drinkName
+	 * @return
+	 */
 	public boolean setDrinkName(String drinkName) {
 		this.clearOutput();
 		if (this.reserve[this.stringConverter(drinkName)] <= 0) {
@@ -123,11 +162,18 @@ public class Dispenser implements Subject {
 		}
 	}
 
-	public void clearOutput() {
+	// clears the output in the view
+	private void clearOutput() {
 		this.outputString = "";
 		this.observer.updateOutput(this.outputString);
 	}
 
+	/**
+	 * Takes the given drinkMenu sets up the reserve. Initial reserve values set to
+	 * 25
+	 * 
+	 * @param drinkMenu
+	 */
 	public void setReserveLabels(ArrayList<Drink> drinkMenu) {
 		int count = 0;
 		this.drinkMenu = drinkMenu;
@@ -146,14 +192,27 @@ public class Dispenser implements Subject {
 		}
 	}
 
+	/**
+	 * gets currently selected list of condiments
+	 * 
+	 * @return
+	 */
 	public ArrayList<Condiment> getCondiment() {
 		return this.condiments;
 	}
 
+	/**
+	 * Returns the last output String
+	 * 
+	 * @return
+	 */
 	public String getOutput() {
 		return this.outputString;
 	}
 
+	/**
+	 * Resets the condment amounts of the currently selected drink to 0;
+	 */
 	public void resetCondiments() {
 		for (int i = 0; i < this.condiments.size(); i++) {
 			this.condiments.get(i).setAmount(0);

@@ -8,6 +8,11 @@ import java.util.Scanner;
 
 import javax.swing.JButton;
 
+/**
+ * The controller class is used to handle interaction between the view and the
+ * models for a coffee pot.
+ * 
+ */
 public class Controller {
 	// Attributes
 	private View view;
@@ -18,7 +23,15 @@ public class Controller {
 	private Scanner menuFile;
 	private ArrayList<Drink> drinkMenu;
 
-	// Constructor
+	/**
+	 * The constructor for the controller sets a view, dispenser, and coinSlot for
+	 * the Controller. It also sets itself as the controller for the view and reads
+	 * in a text file to create a drink menu.
+	 * 
+	 * @param view
+	 * @param dispenser
+	 * @param coinSlot
+	 */
 	public Controller(View view, Dispenser dispenser, CoinSlot coinSlot) {
 		// Models
 		this.dispenser = dispenser;
@@ -60,7 +73,15 @@ public class Controller {
 		view.setDrinkMenu(drinkMenu);
 	}
 
-	// drink buttons
+	/**
+	 * Creates and returns an action listener for drink buttons. The action listener
+	 * updates the current drink in the dispenser. It then checks if a drink has
+	 * associated condiments. If it does, it updates the view to the condiment menu,
+	 * if it does not then it tells the dispenser to server the drink.
+	 * 
+	 * @param button
+	 * @return
+	 */
 	public ActionListener drinkSelect(JButton button) {
 
 		ActionListener drinkPressed = new ActionListener() {
@@ -81,7 +102,11 @@ public class Controller {
 		return drinkPressed;
 	}
 
-	// condiment increase button
+	/**
+	 * Creates and returns an action listener for the increase condiment buttons.
+	 * The action listener calls the increaseCondiment() method in the dispenser
+	 * with the condiment name
+	 */
 	public ActionListener incrementCondiment(JButton button, String name) {
 
 		ActionListener increasePressed = new ActionListener() {
@@ -95,7 +120,12 @@ public class Controller {
 		return increasePressed;
 	}
 
-	// condiment decrease button
+	/**
+	 * Creates and returns an action listener for the decrease condiment buttons.
+	 * The action listener calls the decreaseCondiment() method in the dispenser
+	 * with the condiment name
+	 */
+
 	public ActionListener decrementCondiment(JButton button, String name) {
 
 		ActionListener decreasePressed = new ActionListener() {
@@ -109,7 +139,10 @@ public class Controller {
 		return decreasePressed;
 	}
 
-	// this is the add Coin method
+	/**
+	 * Creates and returns an action listener for the coin buttons. The action
+	 * listener calls the insert() method of the coinSlot with the coin name
+	 */
 	public ActionListener addBalance(JButton button) {
 
 		ActionListener addBalance = new ActionListener() {
@@ -123,7 +156,10 @@ public class Controller {
 		return addBalance;
 	}
 
-	// Coin return
+	/**
+	 * Creates and returns an action listener for the returnBalance button. The
+	 * action listener calls the coinReturn() method in the coinSlot
+	 */
 	public ActionListener returnBalance(JButton button) {
 
 		ActionListener returnBalance = new ActionListener() {
@@ -135,7 +171,11 @@ public class Controller {
 		return returnBalance;
 	}
 
-	// submit
+	/**
+	 * Creates and returns an action listener for the submit button. The action
+	 * listener calls the serveDrink() method of the dispenser and if successful
+	 * returns the view to the drink menu
+	 */
 	public ActionListener submit(JButton button) {
 
 		ActionListener submit = new ActionListener() {
@@ -150,6 +190,11 @@ public class Controller {
 		return submit;
 	}
 
+	/**
+	 * Creates and returns an action listener for the cancel button. The action
+	 * listener resets the condiment amounts in the dispenser, clears the output and
+	 * sets the view to the drinks menu
+	 */
 	public ActionListener cancel(JButton button) {
 
 		ActionListener cancel = new ActionListener() {
