@@ -2,6 +2,9 @@ package coffeePot;
 
 import java.util.EnumSet;
 
+/**
+ * This class is in charge of all of the money handling, storing and change
+ */
 public class CoinSlot implements Subject {
 	private Observer observer;
 	private int[] coinStock;
@@ -30,6 +33,9 @@ public class CoinSlot implements Subject {
 		}
 	}
 
+	/**
+	 *  sets up the  coin slot with 100 of each denomination type
+	 */
 	public CoinSlot() {
 		EnumSet<money> tempMoneySet = EnumSet.allOf(money.class);
 		coinStock = new int[tempMoneySet.size()];
@@ -38,10 +44,16 @@ public class CoinSlot implements Subject {
 		}
 	}
 
+	/**
+	 *  checks if balance is enough
+	 */
 	public boolean isEnough(int price) {
 		return balance >= price;
 	}
 
+	/**
+	 *  updates and informs user of balance
+	 */
 	public void insert(String money) {
 		EnumSet<money> tempMoneySet = EnumSet.allOf(money.class);
 		int index = 0;
@@ -58,6 +70,9 @@ public class CoinSlot implements Subject {
 		}
 	}
 
+	/**
+	 *  deducts price from balance
+	 */
 	public void deduct(int price) {
 		if (this.balance < price) {
 			throw new IllegalArgumentException("Tried to deduct more than the balance");
@@ -66,6 +81,9 @@ public class CoinSlot implements Subject {
 		this.updateBalance();
 	}
 
+	/**
+	 * gives remaining balance when called
+	 */
 	public void coinReturn() {
 		int tempBalance = this.balance;
 		money[] tempMoneyArr = money.values();
@@ -94,12 +112,23 @@ public class CoinSlot implements Subject {
 		this.updateBalance();
 	}
 
+	/**
+	 *  updates the balance
+	 */
 	private void updateBalance() {
 		this.observer.updateBalance(String.format("$%d.%02d", this.getBalance() / 100, this.getBalance() % 100));
 	}
 
+	/**
+	 *  updates the output string
+	 */
 	private void updateOutput() {
 		this.observer.updateOutput(outputString);
+	}
+
+	@Override
+	public void registerObserver(Observer observer) {
+		this.observer = observer;
 	}
 
 	// getters and setters
@@ -107,10 +136,6 @@ public class CoinSlot implements Subject {
 		return this.balance;
 	}
 
-	@Override
-	public void registerObserver(Observer observer) {
-		this.observer = observer;
-	}
 
 	public String getOutput() {
 		return this.outputString;

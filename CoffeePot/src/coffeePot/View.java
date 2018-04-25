@@ -67,7 +67,9 @@ public class View extends JFrame implements Observer {
 	public View() {
 	}
 
-	/// MAIN INSTANTIATING RUN///
+	/**
+	 * initiates the view
+	 */
 	public void run() {
 		drinkSelection.setLayout(new GridLayout(drinkMenu.size(), 3));
 
@@ -114,7 +116,9 @@ public class View extends JFrame implements Observer {
 		orderWindow.setVisible(true);
 	}
 
-	/// Make Drinks Menu///
+	/**
+	 * makes the drink menu
+	 */
 	public void makeDrinksMenu() {
 
 		orderWindow.invalidate();
@@ -133,7 +137,9 @@ public class View extends JFrame implements Observer {
 
 	}
 
-	// Make condiments Menu
+	/**
+	 *  Makes the condiment Menu
+	 */
 	public void makeCondimentMenu(ArrayList<Condiment> condiment) {
 
 		orderWindow.invalidate();
@@ -183,6 +189,9 @@ public class View extends JFrame implements Observer {
 
 	}
 
+	/**
+	 * changes display view to drink selection
+	 */
 	public void changeToDrinks() {
 		orderWindow.getContentPane().remove(condimentSelection);
 		condimentSelection.removeAll();
@@ -195,6 +204,9 @@ public class View extends JFrame implements Observer {
 
 	}
 
+	/**
+	 * changes display view to condiment selection
+	 */
 	public void changeToCondiments() {
 		orderWindow.getContentPane().remove(drinkSelection);
 		drinkSelection.removeAll();
@@ -208,14 +220,20 @@ public class View extends JFrame implements Observer {
 
 	}
 
-	public void updateCondiment(int n, String condient) {
+	/** 
+	 *  updates the display amount for the condiment
+	 */
+	public void updateCondiment(int n, String condiment) {
 		for (int i = 0; i < this.condimentName.length; i++) {
-			if (this.condimentName[i].getText().equals(condient)) {
+			if (this.condimentName[i].getText().equals(condiment)) {
 				this.condimentAmount[i].setText("" + n);
 			}
 		}
 	}
 
+	/**
+	 *  updates the output string
+	 */
 	public void updateOutput(String string) {
 		outputField.setText(string);
 	}
@@ -224,7 +242,8 @@ public class View extends JFrame implements Observer {
 	public void updateBalance(String string) {
 		balanceField.setText(string);
 	}
-
+ 
+	// setter methods
 	public void setDrinkMenu(ArrayList<Drink> drinkMenu) {
 		this.drinkMenu = drinkMenu;
 	}
